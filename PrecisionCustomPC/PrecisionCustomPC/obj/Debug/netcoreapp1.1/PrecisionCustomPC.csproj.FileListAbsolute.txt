@@ -1,0 +1,9 @@
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\bin\Debug\netcoreapp1.1\PrecisionCustomPC.deps.json
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\bin\Debug\netcoreapp1.1\PrecisionCustomPC.runtimeconfig.json
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\bin\Debug\netcoreapp1.1\PrecisionCustomPC.runtimeconfig.dev.json
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\bin\Debug\netcoreapp1.1\PrecisionCustomPC.dll
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\obj\Debug\netcoreapp1.1\PrecisionCustomPC.csprojResolveAssemblyReference.cache
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\obj\Debug\netcoreapp1.1\PrecisionCustomPC.AssemblyInfo.cs
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\bin\Debug\netcoreapp1.1\PrecisionCustomPC.pdb
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\obj\Debug\netcoreapp1.1\PrecisionCustomPC.dll
+C:\Users\higle\OneDrive\Documents\GitHub\PrecisionCustomPC\PrecisionCustomPC\PrecisionCustomPC\obj\Debug\netcoreapp1.1\PrecisionCustomPC.pdb
