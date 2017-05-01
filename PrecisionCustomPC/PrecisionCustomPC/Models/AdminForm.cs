@@ -9,11 +9,18 @@ namespace PrecisionCustomPC.Models
     public class AdminForm
     {
         [Required]
-        [RegularExpression("Admin", ErrorMessage = "Username not found")]
         public string Username { get; set; }
 
         [Required]
-        [RegularExpression("password", ErrorMessage = "Incorrect Password")]
         public string Password { get; set; }
+
+        public bool isValid(string username, string password)
+        {
+            if (username.Equals("Admin") && password.Equals("password"))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

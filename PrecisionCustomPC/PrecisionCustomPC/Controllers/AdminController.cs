@@ -18,7 +18,14 @@ namespace PrecisionCustomPC.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                if (form.isValid(form.Username, form.Password))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect Username or Password");
+                }
             }
 
             return View("Index", form);
