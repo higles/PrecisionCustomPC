@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PrecisionCustomPC.Models.ContactForm
+@{
     ViewData["Title"] = "Contact";
 }
 
@@ -23,6 +24,11 @@
         <p class="tagline">Precision Computers are a great option for your business!</p>
         <p>Unlike big-box computer companies, we use easily replaceable non-proprietary parts making our custom PCs a more cost effective solution.</p>
         <p>If you have a business need for new or replacement PCs, submit this form and we will send you a competitive quote!</p>
-        <iframe frameborder="none" src="http://precisioncustompc.com/html/business_contact.php" allowTransparency="true" style="width:100%;height:20em;border:none;"></iframe>
+        <form asp-action="Submit" asp-controller="Contact">
+            @Html.ValidationSummary()
+            @Html.EditorForModel()
+            <input type="submit" value="Submit" name="Submit" class="submit" />
+        </form>
+        <!--iframe frameborder="none" src="http://precisioncustompc.com/html/business_contact.php" allowTransparency="true" style="width:100%;height:20em;border:none;"></iframe-->
     </span>
 </div>
