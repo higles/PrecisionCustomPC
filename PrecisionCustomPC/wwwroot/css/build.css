@@ -1,0 +1,43 @@
+.option {
+    position: absolute;
+    visibility: hidden;
+}
+
+#size-option {
+    visibility: visible;
+}
+.size-option {
+    position: relative;
+    display: block;
+    float: left;
+    width: 30%;
+    margin: 12em 1.65% 5em 1.65%;
+    cursor: pointer;
+    text-align: center;
+}
+.size-option > a {
+    text-decoration: none;
+}
+.option-title {
+    font-family: 'exo_light_expanded', sans-serif;
+    color: #fff;
+}
+hr {
+    margin: 0.5em 0em;
+    color: #f00;
+    border: 0px solid #f00;
+    box-shadow: 0 0 1px 1px #f00;
+}
+.option-img {
+    margin: 2em 0em;
+    width: 100%;
+}
+.option-desc {
+    display: block;
+    width: 90%;
+    margin: auto;
+    color: #fff;
+    font-family: 'exo_light_condensed', sans-serif;
+    font-size: 1.3em;
+    line-height: 1em;
+}
