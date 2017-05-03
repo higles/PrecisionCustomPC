@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PrecisionCustomPC.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace PrecisionCustomPC.Controllers
 {
@@ -11,9 +12,13 @@ namespace PrecisionCustomPC.Controllers
     {
         public IActionResult Index()
         {
+            if (User.Identity.Name == null)
+            {
+                return RedirectToAction("Register", "Account");
+            }
             return View();
         }
-
+        
         public IActionResult Submit(AdminForm form)
         {
             if (ModelState.IsValid)
