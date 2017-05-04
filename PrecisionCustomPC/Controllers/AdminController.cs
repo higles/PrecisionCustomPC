@@ -1,39 +1,40 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PrecisionCustomPC.Models;
+using PrecisionCustomPC.Models.PartsViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PrecisionCustomPC.Controllers
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : Controller
     {
+        private readonly PartsDbContext _context;
+
+        public AdminController(PartsDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            if (User.Identity.Name == null)
-            {
-                return RedirectToAction("Register", "Account");
-            }
             return View();
         }
         
-        public IActionResult Submit(AdminForm form)
+        public IActionResult Towers()
         {
-            if (ModelState.IsValid)
-            {
-                if (form.isValid(form.Username, form.Password))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Incorrect Username or Password");
-                }
-            }
+            var model = _context.Towers.ToList();
+            return View(model);
+        }
 
-            return View("Index", form);
+        public IActionResult Motherboards()
+        {
+            var model = _context.Motherboards.ToList();
+            return View(model);
         }
     }
 }

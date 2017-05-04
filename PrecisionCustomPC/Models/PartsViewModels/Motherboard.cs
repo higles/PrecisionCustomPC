@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static PrecisionCustomPC.Options;
 
-namespace PrecisionCustomPC.Models
+namespace PrecisionCustomPC.Models.PartsViewModels
 {
     public class Motherboard
     {

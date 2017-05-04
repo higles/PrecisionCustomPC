@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using static PrecisionCustomPC.Options;
 
-namespace PrecisionCustomPC.Models
+namespace PrecisionCustomPC.Models.PartsViewModels
 {
-    public class Case
+    public class Tower
     {
         [Required(ErrorMessage = "Price is required")]
         [Range(0, 10000, ErrorMessage = "Price out of range")]
@@ -34,7 +34,7 @@ namespace PrecisionCustomPC.Models
         public Sizes Size { get; set; }
 
         [DisplayName("Colors:")]
-        public List<String> Colors { get; set; }
+        public List<TowerColor> Colors { get; set; }
 
         [Required(ErrorMessage = "Fan count is required")]
         [Range(0, 10, ErrorMessage = "Fan count not in range")]
