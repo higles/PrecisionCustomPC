@@ -12,6 +12,8 @@ using Microsoft.Extensions.Options;
 using PrecisionCustomPC.Models;
 using PrecisionCustomPC.Models.AccountViewModels;
 using PrecisionCustomPC.Services;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace PrecisionCustomPC.Controllers
 {
@@ -64,13 +66,27 @@ namespace PrecisionCustomPC.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                //get userName
+                string userName;
+
+                if (IsValidEmail(model.Email))
+                {
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user == null) userName = model.Email;
+                    else userName = user.UserName;
+                }
+                else
+                {
+                    userName = model.Email;
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -90,27 +106,6 @@ namespace PrecisionCustomPC.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            var admin = await _userManager.FindByNameAsync("precisioncustompc@gmail.com");
-
-            if (admin == null)
-            {
-                var user = new ApplicationUser { UserName = "precisioncustompc@gmail.com", Email = "precisioncustompc@gmail.com" };
-                var result = await _userManager.CreateAsync(user, "P4$$w0rd");
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Login");
-                }
-                AddErrors(result);
-            }
-
-            return RedirectToAction("Login");
         }
 
         ////
@@ -492,6 +487,59 @@ namespace PrecisionCustomPC.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+        }
+
+        bool invalid = false;
+
+        public bool IsValidEmail(string strIn)
+        {
+            invalid = false;
+            if (String.IsNullOrEmpty(strIn))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names.
+            try
+            {
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+
+            if (invalid)
+                return false;
+
+            // Return true if strIn is in valid e-mail format.
+            try
+            {
+                return Regex.IsMatch(strIn,
+                      @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                      @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+        }
+
+        private string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
+            try
+            {
+                domainName = idn.GetAscii(domainName);
+            }
+            catch (ArgumentException)
+            {
+                invalid = true;
+            }
+            return match.Groups[1].Value + domainName;
         }
 
         #endregion

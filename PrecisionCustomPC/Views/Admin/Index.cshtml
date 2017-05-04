@@ -1,14 +1,9 @@
-﻿@model PrecisionCustomPC.Models.AdminForm
-@{
+﻿@{
     ViewData["Title"] = "Build";
     Layout = "";
 }
 
 <div id="content-box">
-    <form asp-action="Submit" asp-controller="Admin">
-        @Html.EditorForModel()
-        <input type="submit" name="Submit" value="Log In" class="submit"/>
-        @*TODO: Add a CAPTCHA here*@
-        @Html.ValidationSummary()
-    </form>
+    <a asp-action="Towers" asp-controller="Admin"><button>Towers</button></a>
+    <a asp-action="Motherboards" asp-controller="Admin"><button>Motherboards</button></a>
 </div>
