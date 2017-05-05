@@ -4,11 +4,11 @@
     Layout = "";
 }
 
-<h1>Towers</h1>
+<h1>Motherboards</h1>
 <a asp-action="Index" asp-controller="Admin">Parts List</a>
 <hr />
 
-<a asp-action="AddMotherboard" asp-controller="Admin">Add new Motherboard</a>
+<a asp-action="MotherboardAdd" asp-controller="Admin">Add new Motherboard</a>
 <ul>
     @foreach (var item in Model)
     {
@@ -19,22 +19,22 @@
                 <label class="brand">Brand: </label>
             </div>
             <div class="section info">
-                <label class="model">@item.Model</label>
-                <label class="series">@item.Series</label>
-                <label class="brand">@item.Brand</label>
+                <label class="model">&nbsp;@item.Model</label>
+                <label class="series">&nbsp;@item.Series</label>
+                <label class="brand">&nbsp;@item.Brand</label>
             </div>
             <div class="section price">
                 <label class="price">$@item.Price.00</label>
             </div>
             <div class="section links">
-                <a asp-action="MotherboardDetails" asp-Controller="Admin" asp-route-name ="@item.Model">View Details</a>
-                <a asp-action="EditMotherboard" asp-Controller="Admin" asp-route-name ="@item.Model">Edit</a>
-                <a asp-action="DeleteMotherboard" asp-Controller="Admin" asp-route-name ="@item.Model">Delete</a>
+                <a asp-action="MotherboardDetails" asp-Controller="Admin" asp-route-modelNum="@item.Model">View Details</a>
+                <a asp-action="MotherboardEdit" asp-Controller="Admin" asp-route-modelNum="@item.Model">Edit</a>
+                <a asp-action="MotherboardDelete" asp-Controller="Admin" asp-route-modelNum="@item.Model">Delete</a>
             </div>
         </li>
     }
 </ul>
-<a asp-action="AddMotherboard" asp-controller="Admin">Add new Motherboard</a>
+<a asp-action="MotherboardAdd" asp-controller="Admin">Add new Motherboard</a>
 
 <style>
     li {
@@ -46,52 +46,63 @@
         background: #ddd;
         border: 1px solid #666;
     }
-    li:hover {
-        background: #eee;
-    }
-    li div.section {
-        position: relative;
-        display: inline-block;
-    }
-    li div.labels {
-        width: 3em;
-    }
-    li div.info {
-        width: 8em;
-    }
-    li div.price {
-        width: 12em;
-    }
-    li div.links {
-        width: 8em;
-    }
-    li label {
-        position: relative;
-        display: block;
-        padding: 0.2em;
-        color: #333;
-        font-size: 0.8em;
-    }
-    li label.model {
-        font-weight: bold;
-    }
 
-    li label.price {
-        padding: 0;
-        font-size: 2.0em;
-        font-weight: bold;
-        color: #1a1
-    }
+        li:hover {
+            background: #eee;
+        }
+
+        li div.section {
+            position: relative;
+            display: inline-block;
+        }
+
+        li div.labels {
+            width: 3em;
+        }
+
+        li div.info {
+            width: 8em;
+        }
+
+        li div.price {
+            width: 12em;
+        }
+
+        li div.links {
+            width: 8em;
+        }
+
+        li label {
+            position: relative;
+            display: block;
+            padding: 0.2em;
+            color: #333;
+            font-size: 0.8em;
+        }
+
+            li label.model {
+                font-weight: bold;
+            }
+
+            li label.price {
+                padding: 0;
+                font-size: 2.0em;
+                font-weight: bold;
+                color: #1a1
+            }
+
     a {
         position: relative;
         display: block;
     }
+
     li a {
         padding: 0.2em;
         font-size: 0.8em;
         text-decoration: none;
     }
-    li a:hover {
-        text-decoration: underline;
-    }
+
+        li a:hover {
+            text-decoration: underline;
+        }
 </style>

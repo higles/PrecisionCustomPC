@@ -13,9 +13,11 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 name: "Motherboards",
                 columns: table => new
                 {
-                    Model = table.Column<string>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Brand = table.Column<string>(nullable: false),
                     MaxRAM = table.Column<int>(nullable: false),
+                    Model = table.Column<string>(nullable: false),
                     PCISlots = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
                     RAMClass = table.Column<int>(nullable: false),
@@ -26,24 +28,26 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Motherboards", x => x.Model);
+                    table.PrimaryKey("PK_Motherboards", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Towers",
                 columns: table => new
                 {
-                    Model = table.Column<string>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Brand = table.Column<string>(nullable: false),
                     FanCount = table.Column<int>(nullable: false),
                     LiquidCooling = table.Column<bool>(nullable: false),
+                    Model = table.Column<string>(nullable: false),
                     Price = table.Column<int>(nullable: false),
                     Series = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Towers", x => x.Model);
+                    table.PrimaryKey("PK_Towers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,16 +58,16 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Color = table.Column<string>(nullable: true),
                     ColorHash = table.Column<string>(nullable: true),
-                    TowerModel = table.Column<string>(nullable: true)
+                    TowerID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TowerColor", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TowerColor_Towers_TowerModel",
-                        column: x => x.TowerModel,
+                        name: "FK_TowerColor_Towers_TowerID",
+                        column: x => x.TowerID,
                         principalTable: "Towers",
-                        principalColumn: "Model",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -88,9 +92,9 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TowerColor_TowerModel",
+                name: "IX_TowerColor_TowerID",
                 table: "TowerColor",
-                column: "TowerModel");
+                column: "TowerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TowerImage_TowerColorID",

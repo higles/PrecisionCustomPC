@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,14 @@ namespace PrecisionCustomPC.Models.PartsViewModels
 {
     public class Tower
     {
+        [Key]
+        [HiddenInput(DisplayValue = false)]
+        public Nullable<int> ID { get; set; }
+
         [Required(ErrorMessage = "Price is required")]
         [Range(0, 10000, ErrorMessage = "Price out of range")]
         [DisplayName("Price:")]
-        public int Price { get; set; }
+        public Nullable<int> Price { get; set; }
 
         [Required(ErrorMessage = "Brand is required")]
         [MinLength(3, ErrorMessage = "Brand name too short")]
@@ -24,7 +29,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [DisplayName("Series:")]
         public string Series { get; set; }
 
-        [Key]
+        [Required(ErrorMessage = "Model is required")]
         [MinLength(3, ErrorMessage = "Model name too short")]
         [DisplayName("Model:")]
         public string Model { get; set; }
@@ -39,10 +44,10 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [Required(ErrorMessage = "Fan count is required")]
         [Range(0, 10, ErrorMessage = "Fan count not in range")]
         [DisplayName("Fan Count:")]
-        public int FanCount { get; set; }
+        public Nullable<int> FanCount { get; set; }
 
         [Required(ErrorMessage = "Liquid Cooling compatibility is required")]
         [DisplayName("Liquid Cooling Compatible:")]
-        public bool LiquidCooling { get; set; }
+        public Nullable<bool> LiquidCooling { get; set; }
     }
 }

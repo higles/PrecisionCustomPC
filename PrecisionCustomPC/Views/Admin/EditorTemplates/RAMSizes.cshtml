@@ -7,10 +7,10 @@
         from value in values
         select new SelectListItem
         {
-            Text = value.ToString(),
+            Text = value.ToString().Replace("RAM_", ""),
             Value = value.ToString(),
             Selected = (value.Equals(Options.RAMSizes.RAM_16GB))
         };
 }
 
-@Html.DropDownList("MaxRAM", items)
+@Html.DropDownList("", items)

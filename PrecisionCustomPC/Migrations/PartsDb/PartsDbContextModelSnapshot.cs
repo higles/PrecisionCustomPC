@@ -19,13 +19,16 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
                 {
-                    b.Property<string>("Model")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
                         .IsRequired();
 
                     b.Property<int>("MaxRAM");
+
+                    b.Property<string>("Model")
+                        .IsRequired();
 
                     b.Property<int>("PCISlots");
 
@@ -41,14 +44,14 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<int>("USB3Slots");
 
-                    b.HasKey("Model");
+                    b.HasKey("ID");
 
                     b.ToTable("Motherboards");
                 });
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Tower", b =>
                 {
-                    b.Property<string>("Model")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
@@ -58,13 +61,16 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<bool>("LiquidCooling");
 
+                    b.Property<string>("Model")
+                        .IsRequired();
+
                     b.Property<int>("Price");
 
                     b.Property<string>("Series");
 
                     b.Property<int>("Size");
 
-                    b.HasKey("Model");
+                    b.HasKey("ID");
 
                     b.ToTable("Towers");
                 });
@@ -78,11 +84,11 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<string>("ColorHash");
 
-                    b.Property<string>("TowerModel");
+                    b.Property<int?>("TowerID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TowerModel");
+                    b.HasIndex("TowerID");
 
                     b.ToTable("TowerColor");
                 });
@@ -107,7 +113,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 {
                     b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Tower")
                         .WithMany("Colors")
-                        .HasForeignKey("TowerModel");
+                        .HasForeignKey("TowerID");
                 });
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.TowerImage", b =>

@@ -19,15 +19,15 @@
                 <label class="brand">Brand: </label>
             </div>
             <div class="section info">
-                <label class="model">@item.Model</label>
-                <label class="series">@item.Series</label>
-                <label class="brand">@item.Brand</label>
+                <label class="model">&nbsp;@item.Model</label>
+                <label class="series">&nbsp;@item.Series</label>
+                <label class="brand">&nbsp;@item.Brand</label>
             </div>
             <div class="section price">
                 <label class="price">$@item.Price.00</label>
             </div>
             <div class="section links">
-                <a asp-action="TowerDetails" asp-Controller="Admin" asp-route-model ="@item.Model">View Details</a>
+                <a asp-action="TowerDetails" asp-Controller="Admin" asp-route-modelNum ="@item.Model">View Details</a>
                 <a asp-action="TowerEdit" asp-Controller="Admin" asp-route-modelNum ="@item.Model">Edit</a>
                 <a asp-action="TowerDelete" asp-Controller="Admin" asp-route-modelNum ="@item.Model">Delete</a>
             </div>

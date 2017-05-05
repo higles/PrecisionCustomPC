@@ -9,5 +9,5 @@
 <form asp-action="MotherboardAdd" asp-action="Admin">
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Add Motherboard"/>
-    @Html.ValidationSummary()
 </form>
+<a asp-action="Motherboards" asp-controller="Admin">Cancel</a>
