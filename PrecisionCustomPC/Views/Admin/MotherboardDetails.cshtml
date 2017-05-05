@@ -1,0 +1,28 @@
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Motherboard
+@{
+    ViewData["Title"] = "Admin - Motherboard Details - " + Model.Model;
+    Layout = "";
+}
+
+<h1>Motherboard Details</h1><br/>
+<h2>@Model.Brand  @Model.Series  @Model.Model</h2>
+<hr/>
+
+@Html.DisplayForModel()
+
+<style>
+    .display-label {
+        position: relative;
+        float: left;
+        width: 8em;
+        padding: 0.2em;
+        margin: 0.1em;
+        font-weight: bold;
+        background: #ddd;
+    }
+    .display-field {
+        position: relative;
+        display: block;
+        padding: 0.3em;
+    }
+</style>

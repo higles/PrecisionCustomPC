@@ -1,0 +1,15 @@
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Motherboard
+@{
+    ViewData["Title"] = "Admin - Edit Motherboard - " + Model.Model;
+    Layout = "";
+}
+
+<h1>Edit Motherboard</h1><br />
+<h2>@Model.Brand  @Model.Series  @Model.Model</h2>
+<hr />
+
+<form asp-action="MotherboardEdit" asp-controller="Admin">
+    @Html.EditorForModel()
+    <input type="submit" name="Submit" value="Submit Changes"/>
+    @Html.ValidationSummary()
+</form>
