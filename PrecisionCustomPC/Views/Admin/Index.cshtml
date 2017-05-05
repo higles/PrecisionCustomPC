@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "";
+}
+
+<div id="content-box">
+    <a asp-action="Towers" asp-controller="Admin"><button>Towers</button></a>
+    <a asp-action="Motherboards" asp-controller="Admin"><button>Motherboards</button></a>
+</div>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    a button {
+        position: relative;
+        display: table-cell;
+        padding: 1em 0;
+        width: 10em;
+        cursor: pointer;
+    }
+</style>

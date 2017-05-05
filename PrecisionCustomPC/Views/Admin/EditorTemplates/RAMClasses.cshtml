@@ -1,0 +1,16 @@
+﻿@model Options.RAMClasses
+
+@{
+    var values = Enum.GetValues(typeof(Options.RAMClasses)).Cast<Options.RAMClasses>();
+
+    IEnumerable<SelectListItem> items =
+        from value in values
+        select new SelectListItem
+        {
+            Text = value.ToString().Replace('_', ' '),
+            Value = value.ToString(),
+            Selected = (value.Equals(Options.RAMClasses.DDR4))
+        };
+}
+
+@Html.DropDownList("", items)

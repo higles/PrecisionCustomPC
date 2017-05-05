@@ -1,0 +1,16 @@
+﻿@model Options.Sizes 
+
+@{ 
+    var values = Enum.GetValues(typeof(Options.Sizes)).Cast<Options.Sizes>();
+    
+    IEnumerable<SelectListItem> items =
+        from value in values
+        select new SelectListItem
+        {
+            Text = value.ToString().Replace('_', ' '),
+            Value = value.ToString(),
+            Selected = (value.Equals(Options.Sizes.ATX_Full))
+        };
+}
+
+@Html.DropDownList("", items)

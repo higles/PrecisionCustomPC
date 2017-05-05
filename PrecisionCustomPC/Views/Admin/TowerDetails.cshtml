@@ -1,0 +1,40 @@
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Tower
+@{
+    ViewData["Title"] = "Admin - Tower Details - " + Model.Model;
+    Layout = "";
+}
+
+<h1>Tower Details</h1><br/>
+<h2>@Model.Brand  @Model.Series  @Model.Model</h2>
+<hr/>
+
+<div class="container">
+    @Html.DisplayForModel()
+</div>
+<br/><hr/>
+<a asp-action="Towers" asp-controller="Admin">Back to List</a>
+
+<style>
+    .container {
+        position: relative;
+        display: block;
+        width: 40em;
+    }
+
+    .display-label {
+        position: relative;
+        display: inline-block;
+        width: 8em;
+        padding: 0.2em;
+        margin: 0.1em;
+        font-weight: bold;
+        background: #ddd;
+    }
+
+    .display-field {
+        position: relative;
+        display: inline-block;
+        padding: 0.3em;
+        width: 30em;
+    }
+</style>
