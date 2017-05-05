@@ -1,0 +1,14 @@
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Tower
+@{
+    ViewData["Title"] = "Admin - Edit Tower - " + Model.Model;
+    Layout = "";
+}
+
+<h1>Edit Tower</h1><br />
+<h2>@Model.Brand  @Model.Series  @Model.Model</h2>
+<hr />
+
+<form asp-action="TowerEdit" asp-controller="Admin">
+    @Html.EditorForModel()
+    <input type="submit" name="Submit" value="Submit Changes"/>
+</form>
