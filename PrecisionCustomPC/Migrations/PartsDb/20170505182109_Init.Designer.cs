@@ -9,7 +9,7 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    [Migration("20170505052541_Init")]
+    [Migration("20170505182109_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int?>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
@@ -31,19 +31,21 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<string>("Model")
                         .IsRequired();
 
-                    b.Property<int>("PCISlots");
+                    b.Property<int?>("PCISlots");
 
-                    b.Property<int>("Price");
+                    b.Property<int?>("Price")
+                        .IsRequired();
 
                     b.Property<int>("RAMClass");
 
-                    b.Property<int>("RamSlots");
+                    b.Property<int?>("RamSlots")
+                        .IsRequired();
 
                     b.Property<string>("Series");
 
                     b.Property<int>("Size");
 
-                    b.Property<int>("USB3Slots");
+                    b.Property<int?>("USB3Slots");
 
                     b.HasKey("ID");
 
@@ -52,20 +54,23 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Tower", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int?>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
                         .IsRequired();
 
-                    b.Property<int>("FanCount");
+                    b.Property<int?>("FanCount")
+                        .IsRequired();
 
-                    b.Property<bool>("LiquidCooling");
+                    b.Property<bool?>("LiquidCooling")
+                        .IsRequired();
 
                     b.Property<string>("Model")
                         .IsRequired();
 
-                    b.Property<int>("Price");
+                    b.Property<int?>("Price")
+                        .IsRequired();
 
                     b.Property<string>("Series");
 

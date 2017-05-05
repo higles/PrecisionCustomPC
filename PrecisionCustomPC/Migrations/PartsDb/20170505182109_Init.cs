@@ -18,13 +18,13 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     Brand = table.Column<string>(nullable: false),
                     MaxRAM = table.Column<int>(nullable: false),
                     Model = table.Column<string>(nullable: false),
-                    PCISlots = table.Column<int>(nullable: false),
+                    PCISlots = table.Column<int>(nullable: true),
                     Price = table.Column<int>(nullable: false),
                     RAMClass = table.Column<int>(nullable: false),
                     RamSlots = table.Column<int>(nullable: false),
                     Series = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: false),
-                    USB3Slots = table.Column<int>(nullable: false)
+                    USB3Slots = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
