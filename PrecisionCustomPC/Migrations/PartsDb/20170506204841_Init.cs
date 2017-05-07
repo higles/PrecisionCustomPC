@@ -51,20 +51,19 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "TowerColor",
+                name: "Colors",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Color = table.Column<string>(nullable: true),
-                    ColorHash = table.Column<string>(nullable: true),
+                    ColorHash = table.Column<string>(maxLength: 7, nullable: false),
                     TowerID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TowerColor", x => x.ID);
+                    table.PrimaryKey("PK_Colors", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TowerColor_Towers_TowerID",
+                        name: "FK_Colors_Towers_TowerID",
                         column: x => x.TowerID,
                         principalTable: "Towers",
                         principalColumn: "ID",
@@ -72,46 +71,46 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "TowerImage",
+                name: "Images",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ImagePath = table.Column<string>(nullable: true),
-                    TowerColorID = table.Column<int>(nullable: true)
+                    ColorID = table.Column<int>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TowerImage", x => x.ID);
+                    table.PrimaryKey("PK_Images", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TowerImage_TowerColor_TowerColorID",
-                        column: x => x.TowerColorID,
-                        principalTable: "TowerColor",
+                        name: "FK_Images_Colors_ColorID",
+                        column: x => x.ColorID,
+                        principalTable: "Colors",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TowerColor_TowerID",
-                table: "TowerColor",
+                name: "IX_Colors_TowerID",
+                table: "Colors",
                 column: "TowerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TowerImage_TowerColorID",
-                table: "TowerImage",
-                column: "TowerColorID");
+                name: "IX_Images_ColorID",
+                table: "Images",
+                column: "ColorID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
                 name: "Motherboards");
 
             migrationBuilder.DropTable(
-                name: "TowerImage");
-
-            migrationBuilder.DropTable(
-                name: "TowerColor");
+                name: "Colors");
 
             migrationBuilder.DropTable(
                 name: "Towers");

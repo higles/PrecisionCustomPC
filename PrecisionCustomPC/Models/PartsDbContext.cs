@@ -15,5 +15,7 @@ namespace PrecisionCustomPC.Models
 
         public DbSet<PartsViewModels.Tower> Towers { get; set; }
         public DbSet<PartsViewModels.Motherboard> Motherboards { get; set; }
+        public DbSet<PartsViewModels.Color> Colors { get; set; }
+        public DbSet<PartsViewModels.Image> Images { get; set; }
     }
 }

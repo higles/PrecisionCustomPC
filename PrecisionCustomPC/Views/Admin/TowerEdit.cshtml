@@ -1,8 +1,12 @@
 ﻿@model PrecisionCustomPC.Models.PartsViewModels.Tower
 @{
     ViewData["Title"] = "Admin - Edit Tower - " + Model.Model;
+    ViewData["ReturnUrl"] = "TowerEdit";
     Layout = "";
 }
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
 
 <h1>Edit Tower</h1><br />
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
@@ -12,4 +16,132 @@
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Submit Changes"/>
 </form>
-<a asp-action="Towers" asp-controller="Admin">Cancel</a>
+<style>
+    .editor-field {
+        margin-bottom: 0.5em;
+    }
+</style>
+<hr/>
+
+<h3>Colors</h3>
+<form id="add-color" asp-action="TowerAddColor" asp-controller="Admin" asp-route-id="@Model.ID">
+    <input type="text" maxlength="7" name="colorHash" placeholder="Color Hash" class="inline-input" />
+    <input type="submit" value="Add Color" class="inline-input" />
+</form>
+<ul>
+    @foreach (var color in Model.Colors)
+    {
+        <li>
+            <form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]" >
+                <span class="color-box" style="background: @color.ColorHash"></span>
+                <label class="label">@color.ColorHash</label>
+                <input class="text" name="imagePath" type="text" placeholder="Image Path" />
+                <input class="button" type="submit" value="Add Image" />
+                <a class="button" asp-action="TowerDeleteColor" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID">Remove</a>
+            </form>
+        </li>
+    }
+</ul>
+<hr/>
+
+<h3>Images</h3>
+<ul>
+    @foreach (var color in Model.Colors)
+    {
+        <li>
+            <div class="color-block">
+                <span class="color-box" style="background: @color.ColorHash;"></span>
+                <label class="label">@color.ColorHash</label>
+            </div>
+            <ul class="image-list">
+                @foreach(var image in color.Images)
+                {
+                    <li>
+                        <img src="@Url.Content(image.ImagePath)" />
+                        <a class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-iID="@image.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">Delete</a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+</ul>
+<hr/>
+<a asp-action="Towers" asp-controller="Admin">Back to List</a>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+    a.center-link {
+        position: relative;
+        display: block;
+        width: 3em;
+        margin: auto;
+        text-align: center;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    #add-color {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+    }
+    .inline-input {
+        position: relative;
+        display: inline-block;
+        width: 8em;
+    }
+    li {
+        list-style: none;
+    }
+    form.inline-form {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+    }
+    .color-block {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        height: 3em;
+    }
+    .color-box {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 2em;
+        height: 1em;
+        border: 1px solid #000;
+    }
+    .label {
+        position: relative;
+        display: inline-block;
+        width: 4em;
+    }
+    .text {
+        position: relative;
+        display: inline-block;
+        width: 13em;
+    }
+    .button {
+        position: relative;
+        display: inline-block;
+        padding: 0 1em;
+    }
+    .image-list {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1em;
+        width: 40em;
+    }
+    .image-list li {
+        position: relative;
+        display: inline-block;
+    }
+    .image-list li img {
+        position: relative;
+        display: block;
+        height: 3em;
+    }
+</style>

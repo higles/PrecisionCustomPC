@@ -9,7 +9,7 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    [Migration("20170505182109_Init")]
+    [Migration("20170506204841_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,41 @@ namespace PrecisionCustomPC.Migrations.PartsDb
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Color", b =>
+                {
+                    b.Property<int?>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ColorHash")
+                        .IsRequired()
+                        .HasMaxLength(7);
+
+                    b.Property<int?>("TowerID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TowerID");
+
+                    b.ToTable("Colors");
+                });
+
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Image", b =>
+                {
+                    b.Property<int?>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ColorID");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ColorID");
+
+                    b.ToTable("Images");
+                });
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
                 {
@@ -81,52 +116,18 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.ToTable("Towers");
                 });
 
-            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.TowerColor", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Color");
-
-                    b.Property<string>("ColorHash");
-
-                    b.Property<int?>("TowerID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TowerID");
-
-                    b.ToTable("TowerColor");
-                });
-
-            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.TowerImage", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ImagePath");
-
-                    b.Property<int?>("TowerColorID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TowerColorID");
-
-                    b.ToTable("TowerImage");
-                });
-
-            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.TowerColor", b =>
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Color", b =>
                 {
                     b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Tower")
                         .WithMany("Colors")
                         .HasForeignKey("TowerID");
                 });
 
-            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.TowerImage", b =>
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Image", b =>
                 {
-                    b.HasOne("PrecisionCustomPC.Models.PartsViewModels.TowerColor")
+                    b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Color")
                         .WithMany("Images")
-                        .HasForeignKey("TowerColorID");
+                        .HasForeignKey("ColorID");
                 });
         }
     }

@@ -39,7 +39,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         public Sizes Size { get; set; }
 
         [DisplayName("Colors:")]
-        public List<TowerColor> Colors { get; set; }
+        public List<Color> Colors { get; set; } = new List<Color>();
 
         [Required(ErrorMessage = "Fan count is required")]
         [Range(0, 10, ErrorMessage = "Fan count not in range")]

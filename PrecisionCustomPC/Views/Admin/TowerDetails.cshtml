@@ -12,6 +12,39 @@
     @Html.DisplayForModel()
 </div>
 <br/><hr/>
+
+<h3>Colors</h3>
+<ul>
+    @foreach (var color in Model.Colors)
+    {
+        <li>
+            <span class="color-box" style="background: @color.ColorHash"></span>
+            <label class="label">@color.ColorHash</label>
+        </li>
+    }
+</ul>
+<hr/>
+
+<h3>Images</h3>
+<ul>
+    @foreach (var color in Model.Colors)
+    {
+        <li>
+            <div class="color-block">
+                <span class="color-box" style="background: @color.ColorHash;"></span>
+                <label class="label">@color.ColorHash</label>
+            </div>
+            <ul class="image-list">
+                @foreach (var image in color.Images)
+                {
+                    <li>
+                        <img src="@Url.Content(image.ImagePath)" />
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+</ul>
 <a asp-action="Towers" asp-controller="Admin">Back to List</a>
 
 <style>
@@ -36,5 +69,81 @@
         display: inline-block;
         padding: 0.3em;
         width: 30em;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    a.center-link {
+        position: relative;
+        display: block;
+        width: 3em;
+        margin: auto;
+        text-align: center;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    #add-color {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+    }
+    .inline-input {
+        position: relative;
+        display: inline-block;
+        width: 8em;
+    }
+    li {
+        list-style: none;
+    }
+    form.inline-form {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+    }
+    .color-block {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        height: 3em;
+    }
+    .color-box {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 2em;
+        height: 1em;
+        border: 1px solid #000;
+    }
+    .label {
+        position: relative;
+        display: inline-block;
+        width: 4em;
+    }
+    .text {
+        position: relative;
+        display: inline-block;
+        width: 13em;
+    }
+    .button {
+        position: relative;
+        display: inline-block;
+        padding: 0 1em;
+    }
+    .image-list {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1em;
+        width: 40em;
+    }
+    .image-list li {
+        position: relative;
+        display: inline-block;
+    }
+    .image-list li img {
+        position: relative;
+        display: block;
+        height: 3em;
     }
 </style>
