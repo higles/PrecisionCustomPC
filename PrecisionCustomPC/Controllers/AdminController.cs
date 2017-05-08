@@ -61,7 +61,6 @@ namespace PrecisionCustomPC.Controllers
         public IActionResult TowerEdit(int id, string mdl)
         {
             var model = _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
-            int i = _context.Images.Count();
             return View(model);
         }
         [HttpPost]

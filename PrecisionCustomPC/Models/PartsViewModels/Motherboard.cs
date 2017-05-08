@@ -9,31 +9,8 @@ using static PrecisionCustomPC.Options;
 
 namespace PrecisionCustomPC.Models.PartsViewModels
 {
-    public class Motherboard
+    public class Motherboard : Base.NonColoredPart
     {
-        [Key]
-        [HiddenInput(DisplayValue = false)]
-        public Nullable<int> ID { get; set; }
-
-        [Required(ErrorMessage = "Price is required")]
-        [Range(0, 10000, ErrorMessage = "Price out of range")]
-        [DisplayName("Price:")]
-        public Nullable<int> Price { get; set; }
-
-        [Required(ErrorMessage = "Brand is required")]
-        [MinLength(3, ErrorMessage = "Brand name too short")]
-        [DisplayName("Brand:")]
-        public string Brand { get; set; }
-
-        [MinLength(3, ErrorMessage = "Series name too short")]
-        [DisplayName("Series:")]
-        public string Series { get; set; }
-
-        [Required(ErrorMessage = "Model is required")]
-        [MinLength(3, ErrorMessage = "Model name too short")]
-        [DisplayName("Model:")]
-        public string Model { get; set; }
-
         [Required(ErrorMessage = "Size is required")]
         [DisplayName("Size:")]
         public Sizes Size { get; set; }
@@ -57,8 +34,5 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [Range(0, 10, ErrorMessage = "Number of USB 3.0 slots is out of range")]
         [DisplayName("USB 3.0 Slots:")]
         public Nullable<int> USB3Slots { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        public Color Color { get; set; }
     }
 }
