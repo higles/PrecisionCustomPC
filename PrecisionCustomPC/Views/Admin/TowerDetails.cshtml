@@ -74,33 +74,11 @@
     a {
         text-decoration: none;
     }
-    a.center-link {
-        position: relative;
-        display: block;
-        width: 3em;
-        margin: auto;
-        text-align: center;
-    }
     a:hover {
         text-decoration: underline;
     }
-    #add-color {
-        position: relative;
-        display: block;
-        margin: 1em 0;
-    }
-    .inline-input {
-        position: relative;
-        display: inline-block;
-        width: 8em;
-    }
     li {
         list-style: none;
-    }
-    form.inline-form {
-        position: relative;
-        display: block;
-        margin: 1em 0;
     }
     .color-block {
         position: relative;
@@ -126,11 +104,6 @@
         display: inline-block;
         width: 13em;
     }
-    .button {
-        position: relative;
-        display: inline-block;
-        padding: 0 1em;
-    }
     .image-list {
         position: relative;
         display: inline-block;
@@ -140,10 +113,15 @@
     .image-list li {
         position: relative;
         display: inline-block;
+        vertical-align: top;
     }
     .image-list li img {
         position: relative;
         display: block;
         height: 3em;
+    }
+    .image-list li:hover > img {
+        top: -1em;
+        height: 5em;
     }
 </style>

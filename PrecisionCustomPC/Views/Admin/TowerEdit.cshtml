@@ -138,10 +138,15 @@
     .image-list li {
         position: relative;
         display: inline-block;
+        vertical-align: top;
     }
     .image-list li img {
         position: relative;
         display: block;
         height: 3em;
+    }
+    .image-list li:hover > img {
+        top: -1em;
+        height: 5em;
     }
 </style>
