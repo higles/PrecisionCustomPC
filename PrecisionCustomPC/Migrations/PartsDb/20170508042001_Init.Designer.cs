@@ -9,7 +9,7 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    [Migration("20170506204841_Init")]
+    [Migration("20170508042001_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<string>("Brand")
                         .IsRequired();
 
+                    b.Property<int?>("ColorID");
+
                     b.Property<int>("MaxRAM");
 
                     b.Property<string>("Model")
@@ -83,6 +85,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<int?>("USB3Slots");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ColorID");
 
                     b.ToTable("Motherboards");
                 });
@@ -127,6 +131,13 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 {
                     b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Color")
                         .WithMany("Images")
+                        .HasForeignKey("ColorID");
+                });
+
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
+                {
+                    b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Color", "Color")
+                        .WithMany()
                         .HasForeignKey("ColorID");
                 });
         }

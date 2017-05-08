@@ -3,6 +3,9 @@
     ViewData["Title"] = "Admin - Add Motherboard";
     Layout = "";
 }
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
 
 <h1>Add Motherboard</h1>
 
@@ -10,4 +13,10 @@
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Add Motherboard"/>
 </form>
+<style>
+    .editor-field {
+        margin-bottom: 0.5em;
+    }
+</style>
+<hr/>
 <a asp-action="Motherboards" asp-controller="Admin">Cancel</a>

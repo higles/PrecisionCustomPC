@@ -60,6 +60,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<string>("Brand")
                         .IsRequired();
 
+                    b.Property<int?>("ColorID");
+
                     b.Property<int>("MaxRAM");
 
                     b.Property<string>("Model")
@@ -82,6 +84,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<int?>("USB3Slots");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ColorID");
 
                     b.ToTable("Motherboards");
                 });
@@ -126,6 +130,13 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                 {
                     b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Color")
                         .WithMany("Images")
+                        .HasForeignKey("ColorID");
+                });
+
+            modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
+                {
+                    b.HasOne("PrecisionCustomPC.Models.PartsViewModels.Color", "Color")
+                        .WithMany()
                         .HasForeignKey("ColorID");
                 });
         }

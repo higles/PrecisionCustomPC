@@ -3,6 +3,9 @@
     ViewData["Title"] = "Admin - Motherboards";
     Layout = "";
 }
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
 
 <h1>Motherboards</h1>
 <a asp-action="Index" asp-controller="Admin">Parts List</a>
@@ -27,8 +30,8 @@
                 <label class="price">$@item.Price.00</label>
             </div>
             <div class="section links">
-                <a asp-action="MotherboardDetails" asp-Controller="Admin" asp-route-id="@item.ID">View Details</a>
-                <a asp-action="MotherboardEdit" asp-Controller="Admin" asp-route-id="@item.ID">Edit</a>
+                <a asp-action="MotherboardDetails" asp-Controller="Admin" asp-route-id="@item.ID" asp-route-mdl="@item.Model">View Details</a>
+                <a asp-action="MotherboardEdit" asp-Controller="Admin" asp-route-id="@item.ID" asp-route-mdl="@item.Model">Edit</a>
                 <a asp-action="MotherboardDelete" asp-Controller="Admin" asp-route-id="@item.ID">Delete</a>
             </div>
         </li>

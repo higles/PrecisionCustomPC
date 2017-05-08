@@ -57,5 +57,8 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [Range(0, 10, ErrorMessage = "Number of USB 3.0 slots is out of range")]
         [DisplayName("USB 3.0 Slots:")]
         public Nullable<int> USB3Slots { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public Color Color { get; set; }
     }
 }

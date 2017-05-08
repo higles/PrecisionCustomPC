@@ -61,7 +61,7 @@ namespace PrecisionCustomPC.Controllers
         public IActionResult TowerEdit(int id, string mdl)
         {
             var model = _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
-            
+            int i = _context.Images.Count();
             return View(model);
         }
         [HttpPost]
@@ -143,21 +143,24 @@ namespace PrecisionCustomPC.Controllers
             if (ModelState.IsValid)
             {
                 _context.Motherboards.Add(motherboard);
+                motherboard.Color = new Color { ColorHash = "#000000" };
                 _context.SaveChanges();
                 return RedirectToAction("Motherboards");
             }
 
             return View(motherboard);
         }
-        public IActionResult MotherboardDetails(string modelNum)
+        [Route("Motherboard/{id}/{mdl}/Details")]
+        public IActionResult MotherboardDetails(int id, string mdl)
         {
-            var model = _context.Motherboards.FirstOrDefault(e => e.Model == modelNum);
+            var model = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
             return View(model);
         }
         [HttpGet]
-        public IActionResult MotherboardEdit(string modelNum)
+        [Route("Motherboard/{id}/{mdl}/Edit")]
+        public IActionResult MotherboardEdit(int id, string mdl)
         {
-            var model = _context.Motherboards.FirstOrDefault(e => e.Model == modelNum);
+            var model = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
             return View(model);
         }
         [HttpPost]
@@ -173,12 +176,15 @@ namespace PrecisionCustomPC.Controllers
 
             return View(motherboard);
         }
-        public IActionResult MotherboardDelete(string modelNum)
+        public IActionResult MotherboardDelete(int id)
         {
-            var original = _context.Motherboards.FirstOrDefault(e => e.Model == modelNum);
-            if (original != null)
+            var motherboard = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
+            if (motherboard != null)
             {
-                _context.Motherboards.Remove(original);
+                //Remove motherboard's color from database
+                RemoveColor(motherboard.Color);
+                //Remove motherboard from database
+                _context.Motherboards.Remove(motherboard);
                 _context.SaveChanges();
             }
             return RedirectToAction("Motherboards");
@@ -189,7 +195,6 @@ namespace PrecisionCustomPC.Controllers
         public IActionResult ColorAddImage(int mID, int cID, string returnUrl, string imagePath)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            var tower = _context.Towers.FirstOrDefault(e => e.ID == mID);
             var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
             Regex rgx = new Regex(@"^(((https\:\/\/)|(http\:\/\/))?(www[.][^.]*[.])?[^.]*[.]((jpg)|(jpeg)|(JPG)|(gif)|(png)|(bmp)))$");
 
@@ -204,12 +209,13 @@ namespace PrecisionCustomPC.Controllers
                     _context.SaveChanges();
                 }
             }
-            return RedirectToAction(returnUrl, new { ID = mID, mdl = tower.Model });
+            var model = GetReturnModel(returnUrl, mID);
+            return RedirectToAction(returnUrl, new { ID = mID, mdl = model });
         }
         public IActionResult ColorDeleteImage(int mID, int cID, int iID, string returnUrl)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            var tower = _context.Towers.FirstOrDefault(e => e.ID == mID);
+            
             var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
             var image = _context.Images.FirstOrDefault(e => e.ID == iID);
 
@@ -222,7 +228,11 @@ namespace PrecisionCustomPC.Controllers
 
                 _context.SaveChanges();
             }
-            return RedirectToAction(returnUrl, new { ID = mID, mdl = tower.Model });
+
+            //Get model to return
+            var model = GetReturnModel(returnUrl, mID);
+            
+            return RedirectToAction(returnUrl, new { ID = mID, mdl = model });
         }
         #endregion
 
@@ -236,6 +246,18 @@ namespace PrecisionCustomPC.Controllers
             else
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+        private string GetReturnModel(string returnUrl, int id)
+        {
+            switch (returnUrl.Replace("Edit", ""))
+            {
+                case "Tower":
+                    return _context.Towers.FirstOrDefault(e => e.ID == id).Model;
+                case "Motherboard":
+                    return _context.Motherboards.FirstOrDefault(e => e.ID == id).Model;
+                default:
+                    return null;
             }
         }
 

@@ -10,28 +10,6 @@ namespace PrecisionCustomPC.Migrations.PartsDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Motherboards",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: false),
-                    MaxRAM = table.Column<int>(nullable: false),
-                    Model = table.Column<string>(nullable: false),
-                    PCISlots = table.Column<int>(nullable: true),
-                    Price = table.Column<int>(nullable: false),
-                    RAMClass = table.Column<int>(nullable: false),
-                    RamSlots = table.Column<int>(nullable: false),
-                    Series = table.Column<string>(nullable: true),
-                    Size = table.Column<int>(nullable: false),
-                    USB3Slots = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Motherboards", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Towers",
                 columns: table => new
                 {
@@ -90,6 +68,35 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Motherboards",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Brand = table.Column<string>(nullable: false),
+                    ColorID = table.Column<int>(nullable: true),
+                    MaxRAM = table.Column<int>(nullable: false),
+                    Model = table.Column<string>(nullable: false),
+                    PCISlots = table.Column<int>(nullable: true),
+                    Price = table.Column<int>(nullable: false),
+                    RAMClass = table.Column<int>(nullable: false),
+                    RamSlots = table.Column<int>(nullable: false),
+                    Series = table.Column<string>(nullable: true),
+                    Size = table.Column<int>(nullable: false),
+                    USB3Slots = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Motherboards", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Motherboards_Colors_ColorID",
+                        column: x => x.ColorID,
+                        principalTable: "Colors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Colors_TowerID",
                 table: "Colors",
@@ -98,6 +105,11 @@ namespace PrecisionCustomPC.Migrations.PartsDb
             migrationBuilder.CreateIndex(
                 name: "IX_Images_ColorID",
                 table: "Images",
+                column: "ColorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Motherboards_ColorID",
+                table: "Motherboards",
                 column: "ColorID");
         }
 

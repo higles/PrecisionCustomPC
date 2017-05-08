@@ -3,6 +3,9 @@
     ViewData["Title"] = "Admin - Motherboard Details - " + Model.Model;
     Layout = "";
 }
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
 
 <h1>Motherboard Details</h1><br/>
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
@@ -12,6 +15,17 @@
     @Html.DisplayForModel()
 </div>
 <br /><hr />
+
+<h3>Images</h3>
+<ul class="image-list">
+    @foreach (var image in Model.Color.Images)
+    {
+        <li>
+            <img src="@Url.Content(image.ImagePath)" />
+        </li>
+    }
+</ul>
+<hr/>
 <a asp-action="Motherboards" asp-controller="Admin">Back to List</a>
 
 <style>
@@ -34,5 +48,35 @@
         display: inline-block;
         padding: 0.3em;
         width: 30em;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    li {
+        list-style: none;
+    }
+    .image-list {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1em;
+        width: 40em;
+    }
+    .image-list li {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .image-list li img {
+        position: relative;
+        display: block;
+        height: 3em;
+    }
+    .image-list li:hover > img {
+        top: -1em;
+        height: 5em;
     }
 </style>
