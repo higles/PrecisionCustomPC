@@ -1,8 +1,12 @@
 ﻿@model PrecisionCustomPC.Models.PartsViewModels.Motherboard
 @{
     ViewData["Title"] = "Admin - Edit Motherboard - " + Model.Model;
+    ViewData["ReturnUrl"] = "MotherboardEdit";
     Layout = "";
 }
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
 
 <h1>Edit Motherboard</h1><br />
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
@@ -12,4 +16,81 @@
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Submit Changes"/>
 </form>
-<a asp-action="Motherboards" asp-controller="Admin">Cancel</a>
+<style>
+    .editor-field {
+        margin-bottom: 0.5em;
+    }
+</style>
+<hr/>
+
+<h3>Images</h3>
+<form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+    <input class="text" name="imagePath" type="text" placeholder="Image Path" />
+    <input class="button" type="submit" value="Add Image" />
+</form>
+
+<ul class="image-list">
+    @foreach (var image in Model.Color.Images)
+    {
+        <li>
+            <img src="@Url.Content(image.ImagePath)" />
+            <a class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-iID="@image.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">Delete</a>
+        </li>
+    }
+</ul>
+<hr/>
+<a asp-action="Motherboards" asp-controller="Admin">Back to List</a>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+    a.center-link {
+        position: relative;
+        display: block;
+        width: 3em;
+        margin: auto;
+        text-align: center;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    li {
+        list-style: none;
+    }
+    form.inline-form {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+    }
+    .text {
+        position: relative;
+        display: inline-block;
+        width: 13em;
+    }
+    .button {
+        position: relative;
+        display: inline-block;
+        padding: 0 1em;
+    }
+    .image-list {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1em;
+        width: 40em;
+    }
+    .image-list li {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .image-list li img {
+        position: relative;
+        display: block;
+        height: 3em;
+    }
+    .image-list li:hover > img {
+        top: -1em;
+        height: 5em;
+    }
+</style>
