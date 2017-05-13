@@ -11,7 +11,7 @@
 <a asp-action="Index" asp-controller="Admin">Parts List</a>
 <hr/>
 
-<a asp-action="TowerAdd" asp-controller="Admin">Add new Tower</a>
+<a asp-action="TowerAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
 <ul>
     @foreach(var item in Model)
     {
@@ -30,14 +30,16 @@
                 <label class="price">$@item.Price.00</label>
             </div>
             <div class="section links">
-                <a asp-action="TowerDetails" asp-Controller="Admin" asp-route-id ="@item.ID" asp-route-mdl="@item.Model">View Details</a>
-                <a asp-action="TowerEdit" asp-Controller="Admin" asp-route-id ="@item.ID" asp-route-mdl="@item.Model">Edit</a>
-                <a asp-action="TowerDelete" asp-Controller="Admin" asp-route-id ="@item.ID">Delete</a>
+                <a asp-action="ColoredPartDetails" asp-Controller="Admin" asp-route-partType="Tower" asp-route-id="@item.ID" asp-route-mdl="@item.Model">View Details</a>
+                <a asp-action="ColoredPartEdit" asp-Controller="Admin" asp-route-partType="Tower" asp-route-id ="@item.ID" asp-route-mdl="@item.Model">Edit</a>
+                <form asp-action="ColoredPartDelete" asp-Controller="Admin" asp-route-partType="Tower" asp-route-id ="@item.ID">
+                    <input type="submit" value="Delete" class="delete" />
+                </form>
             </div>
         </li>
     }
 </ul>
-<a asp-action="TowerAdd" asp-controller="Admin">Add new Tower</a>
+<a asp-action="TowerAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
 
 <style>
     li {
@@ -95,5 +97,23 @@
     }
     li a:hover {
         text-decoration: underline;
+    }
+    form {
+        padding: 0;
+        margin: 0;
+    }
+    .delete {
+        position: relative;
+        display: block;
+        padding: 0.2em;
+        font-size: 0.8em;
+        color: blue;
+        text-decoration: none;
+        background: none;
+        border: none;
+    }
+    .delete:hover {
+        text-decoration: underline;
+        cursor: pointer;
     }
 </style>

@@ -1,18 +1,18 @@
-﻿@model PrecisionCustomPC.Models.PartsViewModels.Tower
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Base.ColoredPart
 @{
-    ViewData["Title"] = "Admin - Edit Tower - " + Model.Model;
-    ViewData["ReturnUrl"] = "TowerEdit";
+    ViewData["Title"] = "Admin - Edit " + ViewData["Part"] + " - " + Model.Model;
+    ViewData["ReturnUrl"] = "ColoredPartEdit";
     Layout = "";
 }
 <head>
     <title>PC - @ViewData["Title"]</title>
 </head>
 
-<h1>Edit Tower</h1><br />
+<h1>Edit @ViewData["Part"]</h1><br />
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
 <hr />
 
-<form asp-action="TowerEdit" asp-controller="Admin">
+<form asp-action="@ViewData["Part"]Edit" asp-controller="Admin" asp-route-partType="@ViewData["Part"]" asp-route-id="@Model.ID" asp-route-mdl="@Model.Model">
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Submit Changes"/>
 </form>
@@ -24,7 +24,7 @@
 <hr/>
 
 <h3>Colors</h3>
-<form id="add-color" asp-action="TowerAddColor" asp-controller="Admin" asp-route-id="@Model.ID">
+<form id="add-color" asp-action="PartAddColor" asp-controller="Admin" asp-route-id="@Model.ID" asp-route-partType="@ViewData["Part"]">
     <input type="text" maxlength="7" name="colorHash" placeholder="Color Hash" class="inline-input" />
     <input type="submit" value="Add Color" class="inline-input" />
 </form>
@@ -32,12 +32,14 @@
     @foreach (var color in Model.Colors)
     {
         <li>
-            <form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]" >
+            <form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-partType="@ViewData["Part"]" >
                 <span class="color-box" style="background: @color.ColorHash"></span>
                 <label class="label">@color.ColorHash</label>
                 <input class="text" name="imagePath" type="text" placeholder="Image Path" />
                 <input class="button" type="submit" value="Add Image" />
-                <a class="button" asp-action="TowerDeleteColor" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID">Remove</a>
+            </form>
+            <form class="button" asp-action="PartDeleteColor" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-partType="@ViewData["Part"]">
+                <input type="submit" value="Remove" />
             </form>
         </li>
     }
@@ -58,7 +60,9 @@
                 {
                     <li>
                         <img src="@Url.Content(image.ImagePath)" />
-                        <a class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-iID="@image.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">Delete</a>
+                        <form class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-iID="@image.ID" asp-route-partType="@ViewData["Part"]">
+                            <input type="submit" value="Delete" />
+                        </form>
                     </li>
                 }
             </ul>
@@ -66,21 +70,21 @@
     }
 </ul>
 <hr/>
-<a asp-action="Towers" asp-controller="Admin">Back to List</a>
+<a asp-action="@ViewData["Part"]s" asp-controller="Admin">Back to List</a>
 
 <style>
     a {
         text-decoration: none;
     }
-    a.center-link {
+    a:hover {
+        text-decoration: underline;
+    }
+    form.center-link {
         position: relative;
         display: block;
         width: 3em;
-        margin: auto;
+        margin: auto auto;
         text-align: center;
-    }
-    a:hover {
-        text-decoration: underline;
     }
     #add-color {
         position: relative;
@@ -97,7 +101,7 @@
     }
     form.inline-form {
         position: relative;
-        display: block;
+        display: inline-block;
         margin: 1em 0;
     }
     .color-block {
@@ -134,6 +138,7 @@
         display: inline-block;
         margin-bottom: 1em;
         width: 40em;
+        vertical-align: top;
     }
     .image-list li {
         position: relative;
@@ -144,9 +149,5 @@
         position: relative;
         display: block;
         height: 3em;
-    }
-    .image-list li:hover > img {
-        top: -1em;
-        height: 5em;
     }
 </style>

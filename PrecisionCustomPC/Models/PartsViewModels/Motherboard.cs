@@ -9,7 +9,7 @@ using static PrecisionCustomPC.Options;
 
 namespace PrecisionCustomPC.Models.PartsViewModels
 {
-    public class Motherboard : Base.NonColoredPart
+    public class Motherboard : Base.ColorlessPart
     {
         [Required(ErrorMessage = "Size is required")]
         [DisplayName("Size:")]

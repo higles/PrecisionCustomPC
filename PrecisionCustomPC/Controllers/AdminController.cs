@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
+using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using PrecisionCustomPC.Models;
 using PrecisionCustomPC.Models.PartsViewModels;
@@ -26,21 +26,60 @@ namespace PrecisionCustomPC.Controllers
         {
             return View();
         }
+        #region Part
+        [HttpGet]
+        [Route("Colored/{partType}/Add")]
+        public IActionResult PartAdd(string partType)
+        {
+            ViewData["Part"] = partType;
+            var type = GetDbSetType(partType);
+            return View(Activator.CreateInstance(type));
+        }
+
+        #region ColoredPart
+        [HttpGet]
+        [Route("Colored/{partType}/{id}/{mdl}/Details")]
+        public IActionResult ColoredPartDetails(string partType, int id, string mdl)
+        {
+            ViewData["Part"] = partType;
+            var model = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
+            return View(model);
+        }
+        [HttpGet]
+        [Route("Colored/{partType}/{id}/{mdl}/Edit")]
+        public IActionResult ColoredPartEdit(string partType, int id, string mdl)
+        {
+            ViewData["Part"] = partType;
+            var model = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ColoredPartDelete(string partType, int id)
+        {
+            var part = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
+
+            if (part != null)
+            {
+                RemoveAllColors(part);
+                var entry = _context.Entry(part);
+                entry.State = EntityState.Deleted;
+                _context.SaveChanges();
+            }
+            return RedirectToAction(partType + "s");
+        }
 
         #region Tower
         public IActionResult Towers()
         {
             var model = _context.Towers.ToList();
             return View(model);
-        }
-        [HttpGet]
-        public IActionResult TowerAdd()
-        {
-            return View();
-        }
+        }        
         [HttpPost]
-        public IActionResult TowerAdd(Tower tower)
+        [Route("Colored/{partType}/Add")]
+        public IActionResult TowerAdd(string partType, Tower tower)
         {
+            ViewData["Part"] = partType;
+
             if (ModelState.IsValid)
             {
                 _context.Towers.Add(tower);
@@ -48,24 +87,14 @@ namespace PrecisionCustomPC.Controllers
                 return RedirectToAction("Towers");
             }
 
-            return View(tower);
-        }
-        [Route("Tower/{id}/{mdl}/Details")]
-        public IActionResult TowerDetails(int id, string mdl)
-        {
-            var model = _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
-            return View(model);
-        }
-        [HttpGet]
-        [Route("Tower/{id}/{mdl}/Edit")]
-        public IActionResult TowerEdit(int id, string mdl)
-        {
-            var model = _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
-            return View(model);
+            return View("PartAdd", tower);
         }
         [HttpPost]
-        public IActionResult TowerEdit(Tower tower)
+        [Route("Colored/{partType}/{id}/{mdl}/Edit")]
+        public IActionResult TowerEdit(string partType, int id, string mdl, Tower tower)
         {
+            ViewData["Part"] = partType;
+
             if (ModelState.IsValid)
             {
                 var model = _context.Entry(tower).State = EntityState.Modified;
@@ -74,56 +103,42 @@ namespace PrecisionCustomPC.Controllers
                 return RedirectToAction("Towers");
             }
             
-            return View(tower);
-        }
-        public IActionResult TowerAddColor(int id, string colorHash)
-        {
-            var tower = _context.Towers.Include(e => e.Colors).FirstOrDefault(e => e.ID == id);
-            Regex rgx = new Regex(@"^([#]{1}[a-fA-f0-9]{6})$");
-
-            //Make sure color isn't null and is a color hash format
-            if (colorHash != null && rgx.IsMatch(colorHash))
-            {
-                //Make sure the color is unique to this tower
-                if (tower.Colors.FirstOrDefault(c => c.ColorHash == colorHash) == null)
-                {
-                    var color = new PMV.Color { ColorHash = colorHash };
-                    tower.Colors.Add(color);
-                    _context.SaveChanges();
-                }
-            }
-
-            return RedirectToAction("TowerEdit", "Admin", new { ID = id, mdl = tower.Model });
-        }
-        public IActionResult TowerDeleteColor(int mID, int cID)
-        {
-            var tower = _context.Towers.Include(e => e.Colors).FirstOrDefault(e => e.ID == mID);
-            var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
-
-            if (tower != null && color != null)
-            {
-                //Remove color from tower
-                tower.Colors.Remove(color);
-                //Remove color from database
-                RemoveColor(color);
-
-                _context.SaveChanges();
-            }
-            return RedirectToAction("TowerEdit", "Admin", new { ID = mID, mdl = tower.Model });
-        }
-        public IActionResult TowerDelete(int id)
-        {
-            var tower = _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
-            if (tower != null)
-            {
-                RemoveAllColors(tower);
-
-                _context.Towers.Remove(tower);
-                _context.SaveChanges();
-            }
-            return RedirectToAction("Towers");
+            return View("ColoredPartEdit", tower);
         }
         #endregion
+        #endregion 
+
+        #region ColorlessPart
+        [HttpGet]
+        [Route("Colorless/{partType}/{id}/{mdl}/Details")]
+        public IActionResult ColorlessPartDetails(string partType, int id, string mdl)
+        {
+            ViewData["Part"] = partType;
+            var model = (PMV.Base.ColorlessPart)GetDbEntry(partType, id);
+            return View(model);
+        }
+        [HttpGet]
+        [Route("Colorless/{partType}/{id}/{mdl}/Edit")]
+        public IActionResult ColorlessPartEdit(string partType, int id, string mdl)
+        {
+            ViewData["Part"] = partType;
+            var part = (PMV.Base.ColorlessPart)GetDbEntry(partType, id);
+            return View(part);
+        }
+        [HttpPost]
+        public IActionResult ColorlessPartDelete(string partType, int id)
+        {
+            var part = (PMV.Base.ColorlessPart)GetDbEntry(partType, id);
+
+            if (part != null)
+            {
+                RemoveColor(part.Color);
+                var entry = _context.Entry(part);
+                entry.State = EntityState.Deleted;
+                _context.SaveChanges();
+            }
+            return RedirectToAction(partType + "s");
+        }
 
         #region Motherboard
         public IActionResult Motherboards()
@@ -131,40 +146,27 @@ namespace PrecisionCustomPC.Controllers
             var model = _context.Motherboards.ToList();
             return View(model);
         }
-        [HttpGet]
-        public IActionResult MotherboardAdd()
-        {
-            return View();
-        }
         [HttpPost]
-        public IActionResult MotherboardAdd(Motherboard motherboard)
+        public IActionResult MotherboardAdd(string partType, Motherboard motherboard)
         {
+            ViewData["Part"] = partType;
+
             if (ModelState.IsValid)
             {
-                _context.Motherboards.Add(motherboard);
                 motherboard.Color = new Color { ColorHash = "#000000" };
+                _context.Motherboards.Add(motherboard);
                 _context.SaveChanges();
                 return RedirectToAction("Motherboards");
             }
 
-            return View(motherboard);
-        }
-        [Route("Motherboard/{id}/{mdl}/Details")]
-        public IActionResult MotherboardDetails(int id, string mdl)
-        {
-            var model = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
-            return View(model);
-        }
-        [HttpGet]
-        [Route("Motherboard/{id}/{mdl}/Edit")]
-        public IActionResult MotherboardEdit(int id, string mdl)
-        {
-            var model = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
-            return View(model);
+            return View("PartAdd", motherboard);
         }
         [HttpPost]
-        public IActionResult MotherboardEdit(Motherboard motherboard)
+        [Route("Colorless/{partType}/{id}/{mdl}/Edit")]
+        public IActionResult MotherboardEdit(string partType, int id, string mdl, Motherboard motherboard)
         {
+            ViewData["Part"] = partType; 
+
             if (ModelState.IsValid)
             {
                 var model = _context.Entry(motherboard).State = EntityState.Modified;
@@ -173,27 +175,53 @@ namespace PrecisionCustomPC.Controllers
                 return RedirectToAction("Motherboards");
             }
 
-            return View(motherboard);
+            return View("ColorlessPartEdit", motherboard);
         }
-        public IActionResult MotherboardDelete(int id)
-        {
-            var motherboard = _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
-            if (motherboard != null)
-            {
-                //Remove motherboard's color from database
-                RemoveColor(motherboard.Color);
-                //Remove motherboard from database
-                _context.Motherboards.Remove(motherboard);
-                _context.SaveChanges();
-            }
-            return RedirectToAction("Motherboards");
-        }
+        #endregion
+        #endregion
         #endregion
 
         #region Color
-        public IActionResult ColorAddImage(int mID, int cID, string returnUrl, string imagePath)
+        [HttpPost]
+        public IActionResult PartAddColor(int id, string colorHash, string partType)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            var part = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
+            Regex rgx = new Regex(@"^([#]{1}[a-fA-f0-9]{6})$");
+
+            //Make sure color isn't null and is a color hash format
+            if (colorHash != null && rgx.IsMatch(colorHash) && part != null)
+            {
+                //Make sure the color is unique to this tower
+                if (part.Colors.FirstOrDefault(c => c.ColorHash == colorHash) == null)
+                {
+                    var color = new PMV.Color { ColorHash = colorHash };
+                    part.Colors.Add(color);
+                    _context.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("ColoredPartEdit", new { PartType = partType, ID = id, mdl = part.Model });
+        }
+        [HttpPost]
+        public IActionResult PartDeleteColor(int mID, int cID, string partType)
+        {
+            var part = (PMV.Base.ColoredPart)GetDbEntry(partType, mID);
+            var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
+
+            if (part != null && color != null)
+            {
+                //Remove color from tower
+                part.Colors.Remove(color);
+                //Remove color from database
+                RemoveColor(color);
+
+                _context.SaveChanges();
+            }
+            return RedirectToAction("ColoredPartEdit", new { PartType = partType, ID = mID, mdl = part.Model });
+        }
+        [HttpPost]
+        public IActionResult ColorAddImage(int mID, int cID, string partType, string imagePath)
+        {
             var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
             Regex rgx = new Regex(@"^(((https\:\/\/)|(http\:\/\/))?(www[.][^.]*[.])?[^.]*[.]((jpg)|(jpeg)|(JPG)|(gif)|(png)|(bmp)))$");
 
@@ -208,13 +236,14 @@ namespace PrecisionCustomPC.Controllers
                     _context.SaveChanges();
                 }
             }
-            var model = GetReturnModel(returnUrl, mID);
-            return RedirectToAction(returnUrl, new { ID = mID, mdl = model });
-        }
-        public IActionResult ColorDeleteImage(int mID, int cID, int iID, string returnUrl)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
+            var part = GetDbEntry(partType, mID);
+            var returnUrl = GetReturnPrefix(part) + "Edit";
             
+            return RedirectToAction(returnUrl, new { PartType = partType, ID = mID, mdl = part.Model });
+        }
+        [HttpPost]
+        public IActionResult ColorDeleteImage(int mID, int cID, int iID, string partType)
+        {
             var color = _context.Colors.Include(e => e.Images).FirstOrDefault(e => e.ID == cID);
             var image = _context.Images.FirstOrDefault(e => e.ID == iID);
 
@@ -229,45 +258,62 @@ namespace PrecisionCustomPC.Controllers
             }
 
             //Get model to return
-            var model = GetReturnModel(returnUrl, mID);
-            
-            return RedirectToAction(returnUrl, new { ID = mID, mdl = model });
+            var part = GetDbEntry(partType, mID);
+            var returnUrl = GetReturnPrefix(part) + "Edit";
+
+            return RedirectToAction(returnUrl, new { PartType = partType, ID = mID, mdl = part.Model });
         }
         #endregion
 
         #region Helpers
-        private IActionResult RedirectToLocal(string returnUrl)
+        private PMV.Base.Part GetDbEntry(string partType, int id)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (partType == null) return null;
+
+            switch(partType)
             {
-                return Redirect(returnUrl);
+                case "Tower":
+                    return _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
+                case "Motherboard":
+                    return _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
+            }
+
+            return null;
+        }
+        private Type GetDbSetType(string partType)
+        {
+            if (partType == null) return null;
+
+            switch (partType)
+            {
+                case "Tower":
+                    return typeof(Tower);
+                case "Motherboard":
+                    return typeof(Motherboard);
+            }
+
+            return null;
+        }
+        private string GetReturnPrefix(PMV.Base.Part part)
+        {
+            if (part is PMV.Base.ColoredPart)
+            {
+                return "ColoredPart";
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-        }
-        private string GetReturnModel(string returnUrl, int id)
-        {
-            switch (returnUrl.Replace("Edit", ""))
-            {
-                case "Tower":
-                    return _context.Towers.FirstOrDefault(e => e.ID == id).Model;
-                case "Motherboard":
-                    return _context.Motherboards.FirstOrDefault(e => e.ID == id).Model;
-                default:
-                    return null;
+                return "ColorlessPart";
             }
         }
 
-        private void RemoveAllColors(PMV.Tower tower)
+        private void RemoveAllColors(PMV.Base.ColoredPart part)
         {
             //Remove all colors in tower from database
-            foreach (var color in tower.Colors)
+            foreach (var color in part.Colors)
             {
                 RemoveColor(color);
             }
-            tower.Colors.Clear();
+            part.Colors.Clear();
         }
         private void RemoveColor(PMV.Color color)
         {
