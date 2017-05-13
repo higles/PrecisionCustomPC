@@ -9,7 +9,7 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    [Migration("20170508042001_Init")]
+    [Migration("20170510190806_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
@@ -93,7 +93,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Tower", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")

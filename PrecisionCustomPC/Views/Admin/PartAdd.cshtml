@@ -1,0 +1,22 @@
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Base.Part
+@{
+    ViewData["Title"] = "Admin - Add " + ViewData["Part"];
+    Layout = "";
+}
+<head>
+    <title>PC - @ViewData["Title"]</title>
+</head>
+
+<h1>Add @ViewData["Part"]</h1>
+
+<form asp-action="@ViewData["Part"]Add" asp-controller="Admin" asp-route-partType="@ViewData["Part"]">
+    @Html.EditorForModel()
+    <input type="submit" name="Submit" value="Add @ViewData["Part"]"/>
+</form>
+<style>
+    .editor-field {
+        margin-bottom: 0.5em;
+    }
+</style>
+<hr/>
+<a asp-action="Towers" asp-controller="Admin">Cancel</a>

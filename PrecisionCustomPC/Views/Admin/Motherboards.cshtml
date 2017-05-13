@@ -11,7 +11,7 @@
 <a asp-action="Index" asp-controller="Admin">Parts List</a>
 <hr />
 
-<a asp-action="MotherboardAdd" asp-controller="Admin">Add new Motherboard</a>
+<a asp-action="PartAdd" asp-controller="Admin" asp-route-partType="Motherboard">Add new Motherboard</a>
 <ul>
     @foreach (var item in Model)
     {
@@ -30,14 +30,16 @@
                 <label class="price">$@item.Price.00</label>
             </div>
             <div class="section links">
-                <a asp-action="MotherboardDetails" asp-Controller="Admin" asp-route-id="@item.ID" asp-route-mdl="@item.Model">View Details</a>
-                <a asp-action="MotherboardEdit" asp-Controller="Admin" asp-route-id="@item.ID" asp-route-mdl="@item.Model">Edit</a>
-                <a asp-action="MotherboardDelete" asp-Controller="Admin" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="ColorlessPartDetails" asp-Controller="Admin" asp-route-partType="Motherboard" asp-route-id="@item.ID" asp-route-mdl="@item.Model">View Details</a>
+                <a asp-action="ColorlessPartEdit" asp-Controller="Admin" asp-route-partType="Motherboard" asp-route-id="@item.ID" asp-route-mdl="@item.Model">Edit</a>
+                <form asp-action="ColorlessPartDelete" asp-Controller="Admin" asp-route-partType="Motherboard" asp-route-id="@item.ID">
+                    <input type="submit" value="Delete" class="delete" />
+                </form>
             </div>
         </li>
     }
 </ul>
-<a asp-action="MotherboardAdd" asp-controller="Admin">Add new Motherboard</a>
+<a asp-action="PartAdd" asp-controller="Admin" asp-route-partType="Motherboard">Add new Motherboard</a>
 
 <style>
     li {
@@ -49,63 +51,69 @@
         background: #ddd;
         border: 1px solid #666;
     }
-
-        li:hover {
-            background: #eee;
-        }
-
-        li div.section {
-            position: relative;
-            display: inline-block;
-        }
-
-        li div.labels {
-            width: 3em;
-        }
-
-        li div.info {
-            width: 8em;
-        }
-
-        li div.price {
-            width: 12em;
-        }
-
-        li div.links {
-            width: 8em;
-        }
-
-        li label {
-            position: relative;
-            display: block;
-            padding: 0.2em;
-            color: #333;
-            font-size: 0.8em;
-        }
-
-            li label.model {
-                font-weight: bold;
-            }
-
-            li label.price {
-                padding: 0;
-                font-size: 2.0em;
-                font-weight: bold;
-                color: #1a1
-            }
-
+    li:hover {
+        background: #eee;
+    }
+    li div.section {
+        position: relative;
+        display: inline-block;
+    }
+    li div.labels {
+        width: 3em;
+    }
+    li div.info {
+        width: 8em;
+    }
+    li div.price {
+        width: 12em;
+    }
+    li div.links {
+        width: 8em;
+    }
+    li label {
+        position: relative;
+        display: block;
+        padding: 0.2em;
+        color: #333;
+        font-size: 0.8em;
+    }
+    li label.model {
+        font-weight: bold;
+    }
+    li label.price {
+        padding: 0;
+        font-size: 2.0em;
+        font-weight: bold;
+        color: #1a1
+    }
     a {
         position: relative;
         display: block;
     }
-
     li a {
         padding: 0.2em;
         font-size: 0.8em;
         text-decoration: none;
     }
-
-        li a:hover {
-            text-decoration: underline;
-        }
+    li a:hover {
+        text-decoration: underline;
+    }        
+    form {
+        padding: 0;
+        margin: 0;
+    }
+    .delete {
+        position: relative;
+        display: block;
+        padding: 0.2em;
+        font-size: 0.8em;
+        color: blue;
+        text-decoration: none;
+        background: none;
+        border: none;
+    }
+    .delete:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 </style>

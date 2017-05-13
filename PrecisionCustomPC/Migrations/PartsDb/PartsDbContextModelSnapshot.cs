@@ -54,7 +54,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Motherboard", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")
@@ -92,7 +92,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
             modelBuilder.Entity("PrecisionCustomPC.Models.PartsViewModels.Tower", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Brand")

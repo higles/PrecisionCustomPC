@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PrecisionCustomPC.Models.PartsViewModels.Base
 {
-    public class NonColoredPart : Part
+    public class ColorlessPart : Part
     {
         [HiddenInput(DisplayValue = false)]
         public Color Color { get; set; }

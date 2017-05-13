@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrecisionCustomPC.Models.PartsViewModels.Base
 {
@@ -9,8 +10,8 @@ namespace PrecisionCustomPC.Models.PartsViewModels.Base
     {
         [Key]
         [Display(Order = 0)]
-        [HiddenInput(DisplayValue = false)]
-        public Nullable<int> ID { get; set; }
+        [ScaffoldColumn(false)]
+        public int ID { get; set; }
 
         [Display(Order = 1)]
         [Required(ErrorMessage = "Price is required")]

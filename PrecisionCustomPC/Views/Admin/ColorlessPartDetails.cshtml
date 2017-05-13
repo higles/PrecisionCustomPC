@@ -1,13 +1,13 @@
-﻿@model PrecisionCustomPC.Models.PartsViewModels.Motherboard
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Base.ColorlessPart
 @{
-    ViewData["Title"] = "Admin - Motherboard Details - " + Model.Model;
+    ViewData["Title"] = "Admin - " + ViewData["Part"] + " Details - " + Model.Model;
     Layout = "";
 }
 <head>
     <title>PC - @ViewData["Title"]</title>
 </head>
 
-<h1>Motherboard Details</h1><br/>
+<h1>@ViewData["Part"] Details</h1><br/>
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
 <hr/>
 
@@ -26,7 +26,7 @@
     }
 </ul>
 <hr/>
-<a asp-action="Motherboards" asp-controller="Admin">Back to List</a>
+<a asp-action="@ViewData["Part"]s" asp-controller="Admin">Back to List</a>
 
 <style>
     .container {
@@ -64,6 +64,7 @@
         display: inline-block;
         margin-bottom: 1em;
         width: 40em;
+        vertical-align: top;
     }
     .image-list li {
         position: relative;
@@ -74,9 +75,5 @@
         position: relative;
         display: block;
         height: 3em;
-    }
-    .image-list li:hover > img {
-        top: -1em;
-        height: 5em;
     }
 </style>

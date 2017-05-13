@@ -1,6 +1,6 @@
-﻿@model PrecisionCustomPC.Models.PartsViewModels.Motherboard
+﻿@model PrecisionCustomPC.Models.PartsViewModels.Base.ColorlessPart
 @{
-    ViewData["Title"] = "Admin - Edit Motherboard - " + Model.Model;
+    ViewData["Title"] = "Admin - Edit " + ViewData["Part"] + " - " + Model.Model;
     ViewData["ReturnUrl"] = "MotherboardEdit";
     Layout = "";
 }
@@ -8,11 +8,11 @@
     <title>PC - @ViewData["Title"]</title>
 </head>
 
-<h1>Edit Motherboard</h1><br />
+<h1>Edit @ViewData["Part"]</h1><br />
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
 <hr />
 
-<form asp-action="MotherboardEdit" asp-controller="Admin">
+<form asp-action="@ViewData["Part"]Edit" asp-controller="Admin" asp-route-part="@ViewData["Part"]" asp-route-id="@Model.ID" asp-route-mdl="@Model.Model">
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Submit Changes"/>
 </form>
@@ -24,7 +24,7 @@
 <hr/>
 
 <h3>Images</h3>
-<form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+<form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-partType="@ViewData["Part"]">
     <input class="text" name="imagePath" type="text" placeholder="Image Path" />
     <input class="button" type="submit" value="Add Image" />
 </form>
@@ -34,7 +34,9 @@
     {
         <li>
             <img src="@Url.Content(image.ImagePath)" />
-            <a class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-iID="@image.ID" asp-route-returnUrl="@ViewData["ReturnUrl"]">Delete</a>
+            <form class="center-link" asp-action="ColorDeleteImage" asp-route-mID="@Model.ID" asp-route-cID="@Model.Color.ID" asp-route-iID="@image.ID" asp-route-partType="@ViewData["Part"]">
+                <input type="submit" value="Delete" />
+            </form>
         </li>
     }
 </ul>
@@ -45,18 +47,18 @@
     a {
         text-decoration: none;
     }
-    a.center-link {
-        position: relative;
-        display: block;
-        width: 3em;
-        margin: auto;
-        text-align: center;
-    }
     a:hover {
         text-decoration: underline;
     }
     li {
         list-style: none;
+    }
+    form.center-link {
+        position: relative;
+        display: block;
+        width: 3em;
+        margin: auto;
+        text-align: center;
     }
     form.inline-form {
         position: relative;
@@ -78,6 +80,7 @@
         display: inline-block;
         margin-bottom: 1em;
         width: 40em;
+        vertical-align: top;
     }
     .image-list li {
         position: relative;
@@ -88,9 +91,5 @@
         position: relative;
         display: block;
         height: 3em;
-    }
-    .image-list li:hover > img {
-        top: -1em;
-        height: 5em;
     }
 </style>
