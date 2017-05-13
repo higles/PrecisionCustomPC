@@ -13,14 +13,14 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     {
         [Required(ErrorMessage = "Size is required")]
         [DisplayName("Size:")]
-        public Sizes Size { get; set; }
+        public TowerSize Size { get; set; }
 
         [Required(ErrorMessage = "Maximum Memory is required")]
         [DisplayName("Maximum Memory:")]
-        public RAMSizes MaxRAM { get; set; }
+        public RAMSize MaxRAM { get; set; }
 
         [DisplayName("Memory Standard:")]
-        public RAMClasses RAMClass { get; set; }
+        public RAMClasse RAMClass { get; set; }
 
         [Required(ErrorMessage = "Memory slots is required")]
         [Range(0, 10, ErrorMessage = "Number of memory slots is out of range")]
@@ -34,5 +34,8 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [Range(0, 10, ErrorMessage = "Number of USB 3.0 slots is out of range")]
         [DisplayName("USB 3.0 Slots:")]
         public Nullable<int> USB3Slots { get; set; }
+
+        [DisplayName("M2 Slots:")]
+        public Nullable<int> M2Slots { get; set; }
     }
 }

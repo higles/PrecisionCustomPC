@@ -13,7 +13,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     {
         [Required(ErrorMessage = "Size is required")]
         [DisplayName("Size:")]
-        public Sizes Size { get; set; }
+        public TowerSize Size { get; set; }
 
         [Required(ErrorMessage = "Fan count is required")]
         [Range(0, 10, ErrorMessage = "Fan count not in range")]
@@ -23,5 +23,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         [Required(ErrorMessage = "Liquid Cooling compatibility is required")]
         [DisplayName("Liquid Cooling Compatible:")]
         public Nullable<bool> LiquidCooling { get; set; }
+
+        public Nullable<bool> OpticalDrive { get; set; }
     }
 }
