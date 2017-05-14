@@ -1,15 +1,15 @@
-﻿@model Options.Sizes 
+﻿@model Options.RAMClass
 
-@{ 
-    var values = Enum.GetValues(typeof(Options.Sizes)).Cast<Options.Sizes>();
-    
+@{
+    var values = Enum.GetValues(typeof(Options.RAMClass)).Cast<Options.RAMClass>();
+
     IEnumerable<SelectListItem> items =
         from value in values
         select new SelectListItem
         {
             Text = value.ToString().Replace('_', ' '),
             Value = value.ToString(),
-            Selected = (value.Equals(Options.Sizes.ATX_Full))
+            Selected = (value.Equals(Options.RAMClass.DDR4))
         };
 }
 

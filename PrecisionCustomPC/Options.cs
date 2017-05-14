@@ -14,7 +14,7 @@ namespace PrecisionCustomPC
             ATX_Full
         };
 
-        public enum RAMClasse
+        public enum RAMClass
         {
             DDR3,
             DDR4
@@ -57,30 +57,17 @@ namespace PrecisionCustomPC
 
         public enum Color
         {
-            Red = ColorHash._FF0000,
-            Green = ColorHash._00FF00,
-            Blue = ColorHash._0000FF,
-            Purple = ColorHash._9433FF,
-            Pink = ColorHash._FC33FF,
-            Orange = ColorHash._FFA833,
-            Yellow = ColorHash._F9FF33,
-            White = ColorHash._FFFFFF,
-            Black = ColorHash._000000,
-            Silver = ColorHash._C3C3C3,
+            Red = 0xFF0000,
+            Green = 0x00FF00,
+            Blue = 0x0000FF,
+            Purple = 0x9433FF,
+            Pink = 0xFC33FF,
+            Orange = 0xFFA833,
+            Yellow = 0xF9FF33,
+            White = 0xFFFFFF,
+            Black = 0x000000,
+            Silver = 0xC3C3C3,
             RGB
-        }
-        public enum ColorHash
-        {
-            _FF0000, //Red
-            _00FF00, //Green
-            _0000FF, //Blue
-            _9433FF, //Purple
-            _FC33FF, //Pink
-            _FFA833, //Orange
-            _F9FF33, //Yellow
-            _FFFFFF, //White
-            _000000, //Black
-            _C3C3C3, //Silver
         }
     }
 }

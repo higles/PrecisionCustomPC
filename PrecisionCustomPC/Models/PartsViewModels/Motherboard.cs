@@ -20,7 +20,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         public RAMSize MaxRAM { get; set; }
 
         [DisplayName("Memory Standard:")]
-        public RAMClasse RAMClass { get; set; }
+        public RAMClass RAMClass { get; set; }
 
         [Required(ErrorMessage = "Memory slots is required")]
         [Range(0, 10, ErrorMessage = "Number of memory slots is out of range")]

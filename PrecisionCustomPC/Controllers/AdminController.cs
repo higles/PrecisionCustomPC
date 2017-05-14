@@ -153,7 +153,7 @@ namespace PrecisionCustomPC.Controllers
 
             if (ModelState.IsValid)
             {
-                motherboard.Color = new Color { ColorHash = "#000000" };
+                motherboard.Color = new Color { ColorValue = Options.Color.Black };
                 _context.Motherboards.Add(motherboard);
                 _context.SaveChanges();
                 return RedirectToAction("Motherboards");
@@ -183,21 +183,16 @@ namespace PrecisionCustomPC.Controllers
 
         #region Color
         [HttpPost]
-        public IActionResult PartAddColor(int id, string colorHash, string partType)
+        public IActionResult PartAddColor(int id, Options.Color colorModel, string partType)
         {
             var part = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
-            Regex rgx = new Regex(@"^([#]{1}[a-fA-f0-9]{6})$");
-
-            //Make sure color isn't null and is a color hash format
-            if (colorHash != null && rgx.IsMatch(colorHash) && part != null)
+            
+            //Make sure the color is unique to this tower
+            if (part.Colors.FirstOrDefault(c => c.ColorValue == colorModel) == null)
             {
-                //Make sure the color is unique to this tower
-                if (part.Colors.FirstOrDefault(c => c.ColorHash == colorHash) == null)
-                {
-                    var color = new PMV.Color { ColorHash = colorHash };
-                    part.Colors.Add(color);
-                    _context.SaveChanges();
-                }
+                var color = new PMV.Color { ColorValue = colorModel };
+                part.Colors.Add(color);
+                _context.SaveChanges();
             }
 
             return RedirectToAction("ColoredPartEdit", new { PartType = partType, ID = id, mdl = part.Model });
@@ -210,7 +205,7 @@ namespace PrecisionCustomPC.Controllers
 
             if (part != null && color != null)
             {
-                //Remove color from tower
+                //Remove color from part
                 part.Colors.Remove(color);
                 //Remove color from database
                 RemoveColor(color);

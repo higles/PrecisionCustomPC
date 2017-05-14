@@ -1,7 +1,7 @@
-﻿@model Options.RAMSizes
+﻿@model Options.RAMSize
 
 @{
-    var values = Enum.GetValues(typeof(Options.RAMSizes)).Cast<Options.RAMSizes>();
+    var values = Enum.GetValues(typeof(Options.RAMSize)).Cast<Options.RAMSize>();
 
     IEnumerable<SelectListItem> items =
         from value in values
@@ -9,7 +9,7 @@
         {
             Text = value.ToString().Replace("RAM_", ""),
             Value = value.ToString(),
-            Selected = (value.Equals(Options.RAMSizes.RAM_16GB))
+            Selected = (value.Equals(Options.RAMSize.RAM_16GB))
         };
 }
 

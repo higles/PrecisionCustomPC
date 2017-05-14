@@ -10,7 +10,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     {
         [Required]
         [Display(Name = "Memory Standard:")]
-        public Options.RAMClasse Class { get; set; }
+        public Options.RAMClass Class { get; set; }
 
         [Required]
         [Display(Name = "Memory Size:")]

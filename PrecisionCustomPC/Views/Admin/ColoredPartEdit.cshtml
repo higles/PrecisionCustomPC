@@ -25,7 +25,8 @@
 
 <h3>Colors</h3>
 <form id="add-color" asp-action="PartAddColor" asp-controller="Admin" asp-route-id="@Model.ID" asp-route-partType="@ViewData["Part"]">
-    <input type="text" maxlength="7" name="colorHash" placeholder="Color Hash" class="inline-input" />
+    @*<input type="text" maxlength="7" name="colorHash" placeholder="Color Hash" class="inline-input" />*@
+    @Html.EditorFor(m => m.ColorModel)
     <input type="submit" value="Add Color" class="inline-input" />
 </form>
 <ul>
@@ -33,8 +34,8 @@
     {
         <li>
             <form class="inline-form" asp-action="ColorAddImage" asp-controller="Admin" asp-route-mID="@Model.ID" asp-route-cID="@color.ID" asp-route-partType="@ViewData["Part"]" >
-                <span class="color-box" style="background: @color.ColorHash"></span>
-                <label class="label">@color.ColorHash</label>
+                <span class="color-box" style="background: @color.ColorValue.ToString()"></span>
+                <label class="label">@color.ColorValue.ToString()</label>
                 <input class="text" name="imagePath" type="text" placeholder="Image Path" />
                 <input class="button" type="submit" value="Add Image" />
             </form>
@@ -52,8 +53,8 @@
     {
         <li>
             <div class="color-block">
-                <span class="color-box" style="background: @color.ColorHash;"></span>
-                <label class="label">@color.ColorHash</label>
+                <span class="color-box" style="background: @color.ColorValue.ToString()"></span>
+                <label class="label">@color.ColorValue.ToString()</label>
             </div>
             <ul class="image-list">
                 @foreach(var image in color.Images)

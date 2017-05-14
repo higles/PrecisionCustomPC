@@ -21,8 +21,8 @@
     @foreach (var color in Model.Colors)
     {
         <li>
-            <span class="color-box" style="background: @color.ColorHash"></span>
-            <label class="label">@color.ColorHash</label>
+            <span class="color-box" style="background: @color.ColorValue.ToString()"></span>
+            <label class="label">@color.ColorValue.ToString()</label>
         </li>
     }
 </ul>
@@ -34,8 +34,8 @@
     {
         <li>
             <div class="color-block">
-                <span class="color-box" style="background: @color.ColorHash;"></span>
-                <label class="label">@color.ColorHash</label>
+                <span class="color-box" style="background: @color.ColorValue.ToString();"></span>
+                <label class="label">@color.ColorValue.ToString()</label>
             </div>
             <ul class="image-list">
                 @foreach (var image in color.Images)
