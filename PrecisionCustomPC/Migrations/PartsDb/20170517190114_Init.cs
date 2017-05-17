@@ -40,7 +40,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     Price = table.Column<int>(nullable: false),
                     Series = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: false),
-                    Speed = table.Column<float>(nullable: false)
+                    Speed = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +81,7 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     Power = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
                     Series = table.Column<string>(nullable: true),
-                    Speed = table.Column<float>(nullable: true)
+                    Speed = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

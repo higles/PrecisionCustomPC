@@ -48,7 +48,19 @@
         </li>
     }
 </ul>
-<a asp-action="@ViewData["Part"]s" asp-controller="Admin">Back to List</a>
+<hr/>
+@{
+    string returnUrl;
+    if (ViewData["Part"].Equals("Memory") || ViewData["Part"].Equals("Storage"))
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "");
+    }
+    else
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "") + "s";
+    }
+}
+<a asp-action="@returnUrl" asp-controller="Admin">Back to List</a>
 
 <style>
     .container {

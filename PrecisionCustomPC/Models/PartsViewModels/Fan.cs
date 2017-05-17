@@ -9,7 +9,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     public class Fan : Base.ColoredPart
     {
         [Required]
-        [Display(Name = "Diameter:")]
+        [Display(Name = "Diameter")]
         public Options.FanSize Size { get; set; }
     }
 }

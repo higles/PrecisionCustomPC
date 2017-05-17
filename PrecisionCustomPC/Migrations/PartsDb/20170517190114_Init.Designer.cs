@@ -9,7 +9,7 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    [Migration("20170514194054_Init")]
+    [Migration("20170517190114_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<int>("Size");
 
-                    b.Property<float>("Speed");
+                    b.Property<int?>("Speed")
+                        .IsRequired();
 
                     b.HasKey("ID");
 
@@ -172,7 +173,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<int>("Modular");
 
-                    b.Property<int>("Power");
+                    b.Property<int?>("Power")
+                        .IsRequired();
 
                     b.Property<int?>("Price")
                         .IsRequired();
@@ -196,9 +198,11 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<int?>("ColorID");
 
-                    b.Property<bool>("Cooler");
+                    b.Property<bool?>("Cooler")
+                        .IsRequired();
 
-                    b.Property<int>("Cores");
+                    b.Property<int?>("Cores")
+                        .IsRequired();
 
                     b.Property<string>("Model")
                         .IsRequired();
@@ -208,7 +212,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<string>("Series");
 
-                    b.Property<float>("Speed");
+                    b.Property<float?>("Speed")
+                        .IsRequired();
 
                     b.HasKey("ID");
 
@@ -237,7 +242,8 @@ namespace PrecisionCustomPC.Migrations.PartsDb
 
                     b.Property<string>("Series");
 
-                    b.Property<int>("Size");
+                    b.Property<int?>("Size")
+                        .IsRequired();
 
                     b.HasKey("ID");
 
@@ -294,14 +300,15 @@ namespace PrecisionCustomPC.Migrations.PartsDb
                     b.Property<string>("Model")
                         .IsRequired();
 
-                    b.Property<int>("Power");
+                    b.Property<int?>("Power")
+                        .IsRequired();
 
                     b.Property<int?>("Price")
                         .IsRequired();
 
                     b.Property<string>("Series");
 
-                    b.Property<float?>("Speed");
+                    b.Property<int?>("Speed");
 
                     b.HasKey("ID");
 

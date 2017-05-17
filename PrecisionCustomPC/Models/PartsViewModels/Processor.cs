@@ -10,16 +10,16 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     {
         [Required]
         [Range(2, 5)]
-        [Display(Name = "Clock Speed:")]
-        public float Speed { get; set; }
+        [Display(Name = "Clock Speed")]
+        public Nullable<float> Speed { get; set; }
 
         [Required]
         [Range(2, 10)]
-        [Display(Name = "Number of Cores:")]
-        public int Cores { get; set; }
+        [Display(Name = "Number of Cores")]
+        public Nullable<int> Cores { get; set; }
         
         [Required]
-        [Display(Name = "Cooling Fan Included:")]
-        public bool Cooler { get; set; }
+        [Display(Name = "Cooling Fan Included")]
+        public Nullable<bool> Cooler { get; set; }
     }
 }

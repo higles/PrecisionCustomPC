@@ -14,7 +14,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
 
         [Required]
         [Range(100, 10000)]
-        [Display(Name = "Size in GB:")]
-        public int Size { get; set; }
+        [Display(Name = "Size in GB")]
+        public Nullable<int> Size { get; set; }
     }
 }

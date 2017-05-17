@@ -1,6 +1,7 @@
 ﻿@model List<PrecisionCustomPC.Models.PartsViewModels.Tower>
 @{
     ViewData["Title"] = "Admin - Towers";
+    ViewData["ReturnUrl"] = "Towers";
     Layout = "";
 }
 <head>
@@ -11,7 +12,7 @@
 <a asp-action="Index" asp-controller="Admin">Parts List</a>
 <hr/>
 
-<a asp-action="TowerAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
+<a asp-action="PartAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
 <ul>
     @foreach(var item in Model)
     {
@@ -39,7 +40,7 @@
         </li>
     }
 </ul>
-<a asp-action="TowerAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
+<a asp-action="PartAdd" asp-controller="Admin" asp-route-partType="Tower">Add new Tower</a>
 
 <style>
     li {

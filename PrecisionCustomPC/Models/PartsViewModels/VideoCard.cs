@@ -9,17 +9,16 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     public class VideoCard : Base.ColoredPart
     {
         [Required]
-        [Range(2, 20)]
-        [Display(Name = "Memory:")]
-        public int Memory { get; set; }
+        [Display(Name = "Memory")]
+        public Options.RAMSize Memory { get; set; }
         
         [Range(1000, 3000)]
         [Display(Name = "Clock Speed")]
-        public Nullable<float> Speed { get; set; }
+        public Nullable<int> Speed { get; set; }
 
         [Required]
         [Range(50, 800)]
-        [Display(Name = "Watts:")]
-        public int Power { get; set; }
+        [Display(Name = "Watts")]
+        public Nullable<int> Power { get; set; }
     }
 }

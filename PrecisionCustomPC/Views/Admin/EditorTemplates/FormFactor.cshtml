@@ -1,0 +1,16 @@
+﻿@model Options.FormFactor
+
+@{
+    var values = Enum.GetValues(typeof(Options.FormFactor)).Cast<Options.FormFactor>();
+
+    IEnumerable<SelectListItem> items =
+        from value in values
+        select new SelectListItem
+        {
+            Text = value.ToString().Replace('_', ' '),
+            Value = value.ToString(),
+            Selected = (value.Equals(Options.FormFactor.HDD))
+        };
+}
+
+@Html.DropDownList("", items)

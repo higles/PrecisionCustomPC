@@ -12,7 +12,7 @@
 <h2>@Model.Brand  @Model.Series  @Model.Model</h2>
 <hr />
 
-<form asp-action="@ViewData["Part"]Edit" asp-controller="Admin" asp-route-partType="@ViewData["Part"]" asp-route-id="@Model.ID" asp-route-mdl="@Model.Model">
+<form asp-action="@ViewData["Part"].ToString().Replace(" ", "")Edit" asp-controller="Admin" asp-route-id="@Model.ID" asp-route-mdl="@Model.Model">
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Submit Changes"/>
 </form>
@@ -71,7 +71,18 @@
     }
 </ul>
 <hr/>
-<a asp-action="@ViewData["Part"]s" asp-controller="Admin">Back to List</a>
+@{
+    string returnUrl;
+    if (ViewData["Part"].Equals("Memory") || ViewData["Part"].Equals("Storage"))
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "");
+    }
+    else
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "") + "s";
+    }
+}
+<a asp-action="@returnUrl" asp-controller="Admin">Back to List</a>
 
 <style>
     a {

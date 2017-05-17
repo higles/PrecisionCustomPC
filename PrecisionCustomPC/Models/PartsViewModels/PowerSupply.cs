@@ -10,11 +10,11 @@ namespace PrecisionCustomPC.Models.PartsViewModels
     {
         [Required]
         [Range(400, 1500)]
-        [Display(Name = "Watts:")]
-        public int Power { get; set; }
+        [Display(Name = "Watts")]
+        public Nullable<int> Power { get; set; }
 
         [Required]
-        [Display(Name = "Modular:")]
+        [Display(Name = "Modular")]
         public Options.Modular Modular { get; set; }
     }
 }

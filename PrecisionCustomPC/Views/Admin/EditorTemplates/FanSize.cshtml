@@ -1,0 +1,16 @@
+﻿@model Options.FanSize
+
+@{
+    var values = Enum.GetValues(typeof(Options.FanSize)).Cast<Options.FanSize>();
+
+    IEnumerable<SelectListItem> items =
+        from value in values
+        select new SelectListItem
+        {
+            Text = value.ToString().Replace('_', ' '),
+            Value = value.ToString(),
+            Selected = (value.Equals(Options.FanSize._80mm))
+        };
+}
+
+@Html.DropDownList("", items)
