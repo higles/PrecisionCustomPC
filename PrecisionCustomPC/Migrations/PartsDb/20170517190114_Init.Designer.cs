@@ -9,9 +9,10 @@ using PrecisionCustomPC;
 namespace PrecisionCustomPC.Migrations.PartsDb
 {
     [DbContext(typeof(PartsDbContext))]
-    partial class PartsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170517190114_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

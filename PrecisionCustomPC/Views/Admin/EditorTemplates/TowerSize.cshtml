@@ -1,15 +1,15 @@
-﻿@model Options.Color
+﻿@model Options.TowerSize 
 
-@{
-    var values = Enum.GetValues(typeof(Options.Color)).Cast<Options.Color>();
-
+@{ 
+    var values = Enum.GetValues(typeof(Options.TowerSize)).Cast<Options.TowerSize>();
+    
     IEnumerable<SelectListItem> items =
         from value in values
         select new SelectListItem
         {
             Text = value.ToString().Replace('_', ' '),
             Value = value.ToString(),
-            Selected = (value.Equals(Options.Color.Black))
+            Selected = (value.Equals(Options.TowerSize.ATX_Full))
         };
 }
 

@@ -1,7 +1,7 @@
-﻿@model Options.Color
+﻿@model Options.RAMClass
 
 @{
-    var values = Enum.GetValues(typeof(Options.Color)).Cast<Options.Color>();
+    var values = Enum.GetValues(typeof(Options.RAMClass)).Cast<Options.RAMClass>();
 
     IEnumerable<SelectListItem> items =
         from value in values
@@ -9,7 +9,7 @@
         {
             Text = value.ToString().Replace('_', ' '),
             Value = value.ToString(),
-            Selected = (value.Equals(Options.Color.Black))
+            Selected = (value.Equals(Options.RAMClass.DDR4))
         };
 }
 

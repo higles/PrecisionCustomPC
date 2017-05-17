@@ -11,17 +11,20 @@ namespace PrecisionCustomPC.Models.PartsViewModels
 {
     public class Tower : Base.ColoredPart
     {
-        [Required(ErrorMessage = "Size is required")]
-        [DisplayName("Size:")]
-        public Sizes Size { get; set; }
+        [Required]
+        [DisplayName("Size")]
+        public TowerSize Size { get; set; }
 
-        [Required(ErrorMessage = "Fan count is required")]
-        [Range(0, 10, ErrorMessage = "Fan count not in range")]
-        [DisplayName("Fan Count:")]
+        [Required]
+        [Range(0, 10)]
+        [DisplayName("Fan Count")]
         public Nullable<int> FanCount { get; set; }
 
-        [Required(ErrorMessage = "Liquid Cooling compatibility is required")]
-        [DisplayName("Liquid Cooling Compatible:")]
+        [Required]
+        [DisplayName("Liquid Cooling Compatible")]
         public Nullable<bool> LiquidCooling { get; set; }
+
+        [DisplayName("Optical Drive")]
+        public Nullable<bool> OpticalDrive { get; set; }
     }
 }

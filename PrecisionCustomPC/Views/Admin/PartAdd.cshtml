@@ -9,7 +9,7 @@
 
 <h1>Add @ViewData["Part"]</h1>
 
-<form asp-action="@ViewData["Part"]Add" asp-controller="Admin" asp-route-partType="@ViewData["Part"]">
+<form asp-action="@ViewData["Part"].ToString().Replace(" ", "")Add" asp-controller="Admin">
     @Html.EditorForModel()
     <input type="submit" name="Submit" value="Add @ViewData["Part"]"/>
 </form>
@@ -19,4 +19,4 @@
     }
 </style>
 <hr/>
-<a asp-action="Towers" asp-controller="Admin">Cancel</a>
+<a asp-action="@ViewData["Part"].ToString().Replace(" ", "")s" asp-controller="Admin">Cancel</a>

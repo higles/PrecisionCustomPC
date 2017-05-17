@@ -28,7 +28,7 @@ namespace PrecisionCustomPC.Controllers
         }
         #region Part
         [HttpGet]
-        [Route("Colored/{partType}/Add")]
+        [Route("Part/{partType}/Add")]
         public IActionResult PartAdd(string partType)
         {
             ViewData["Part"] = partType;
@@ -65,7 +65,13 @@ namespace PrecisionCustomPC.Controllers
                 entry.State = EntityState.Deleted;
                 _context.SaveChanges();
             }
-            return RedirectToAction(partType + "s");
+            string returnUrl;
+            if (partType.Equals("Memory") || partType.Equals("Storage"))
+                returnUrl = partType.Replace(" ", "");
+            else
+                returnUrl = partType.Replace(" ", "") + "s";
+
+            return RedirectToAction(returnUrl);
         }
 
         #region Tower
@@ -75,10 +81,10 @@ namespace PrecisionCustomPC.Controllers
             return View(model);
         }        
         [HttpPost]
-        [Route("Colored/{partType}/Add")]
-        public IActionResult TowerAdd(string partType, Tower tower)
+        [Route("Colored/Tower/Add")]
+        public IActionResult TowerAdd(Tower tower)
         {
-            ViewData["Part"] = partType;
+            ViewData["Part"] = "Tower";
 
             if (ModelState.IsValid)
             {
@@ -90,10 +96,10 @@ namespace PrecisionCustomPC.Controllers
             return View("PartAdd", tower);
         }
         [HttpPost]
-        [Route("Colored/{partType}/{id}/{mdl}/Edit")]
-        public IActionResult TowerEdit(string partType, int id, string mdl, Tower tower)
+        [Route("Colored/Tower/{id}/{mdl}/Edit")]
+        public IActionResult TowerEdit(int id, string mdl, Tower tower)
         {
-            ViewData["Part"] = partType;
+            ViewData["Part"] = "Tower";
 
             if (ModelState.IsValid)
             {
@@ -106,7 +112,121 @@ namespace PrecisionCustomPC.Controllers
             return View("ColoredPartEdit", tower);
         }
         #endregion
-        #endregion 
+        #region Fan
+        public IActionResult Fans()
+        {
+            var model = _context.Fans.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colored/Fan/Add")]
+        public IActionResult FanAdd(Fan fan)
+        {
+            ViewData["Part"] = "Fan";
+
+            if (ModelState.IsValid)
+            {
+                _context.Fans.Add(fan);
+                _context.SaveChanges();
+                return RedirectToAction("Fans");
+            }
+
+            return View("PartAdd", fan);
+        }
+        [HttpPost]
+        [Route("Colored/Fan/{id}/{mdl}/Edit")]
+        public IActionResult FanEdit(int id, string mdl, Fan fan)
+        {
+            ViewData["Part"] = "Fan";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(fan).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("Fans");
+            }
+
+            return View("ColoredPartEdit", fan);
+        }
+        #endregion
+        #region Memory
+        public IActionResult Memory()
+        {
+            var model = _context.Memory.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colored/Memory/Add")]
+        public IActionResult MemoryAdd(Memory memory)
+        {
+            ViewData["Part"] = "Memory";
+
+            if (ModelState.IsValid)
+            {
+                _context.Memory.Add(memory);
+                _context.SaveChanges();
+                return RedirectToAction("Memory");
+            }
+
+            return View("PartAdd", memory);
+        }
+        [HttpPost]
+        [Route("Colored/Memory/{id}/{mdl}/Edit")]
+        public IActionResult MemoryEdit(int id, string mdl, Memory memory)
+        {
+            ViewData["Part"] = "Memory";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(memory).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("Memory");
+            }
+
+            return View("ColoredPartEdit", memory);
+        }
+        #endregion
+        #region Video Card
+        public IActionResult VideoCards()
+        {
+            var model = _context.VideoCards.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colored/Video Card/Add")]
+        public IActionResult VideoCardAdd(VideoCard videoCard)
+        {
+            ViewData["Part"] = "Video Card";
+
+            if (ModelState.IsValid)
+            {
+                _context.VideoCards.Add(videoCard);
+                _context.SaveChanges();
+                return RedirectToAction("VideoCards");
+            }
+
+            return View("PartAdd", videoCard);
+        }
+        [HttpPost]
+        [Route("Colored/Video Card/{id}/{mdl}/Edit")]
+        public IActionResult VideoCardEdit(int id, string mdl, VideoCard videoCard)
+        {
+            ViewData["Part"] = "Video Card";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(videoCard).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("VideoCards");
+            }
+
+            return View("ColoredPartEdit", videoCard);
+        }
+        #endregion
+        #endregion
 
         #region ColorlessPart
         [HttpGet]
@@ -137,7 +257,13 @@ namespace PrecisionCustomPC.Controllers
                 entry.State = EntityState.Deleted;
                 _context.SaveChanges();
             }
-            return RedirectToAction(partType + "s");
+            string returnUrl;
+            if (partType.Equals("Memory") || partType.Equals("Storage"))
+                returnUrl = partType.Replace(" ", "");
+            else
+                returnUrl = partType.Replace(" ", "") + "s";
+
+            return RedirectToAction(returnUrl);
         }
 
         #region Motherboard
@@ -147,13 +273,14 @@ namespace PrecisionCustomPC.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult MotherboardAdd(string partType, Motherboard motherboard)
+        [Route("Colorless/Motherboard/Add")]
+        public IActionResult MotherboardAdd(Motherboard motherboard)
         {
-            ViewData["Part"] = partType;
+            ViewData["Part"] = "Motherboard";
 
             if (ModelState.IsValid)
             {
-                motherboard.Color = new Color { ColorHash = "#000000" };
+                motherboard.Color = new Color { ColorValue = Options.Color.Black };
                 _context.Motherboards.Add(motherboard);
                 _context.SaveChanges();
                 return RedirectToAction("Motherboards");
@@ -162,10 +289,10 @@ namespace PrecisionCustomPC.Controllers
             return View("PartAdd", motherboard);
         }
         [HttpPost]
-        [Route("Colorless/{partType}/{id}/{mdl}/Edit")]
-        public IActionResult MotherboardEdit(string partType, int id, string mdl, Motherboard motherboard)
+        [Route("Colorless/Motherboard/{id}/{mdl}/Edit")]
+        public IActionResult MotherboardEdit(int id, string mdl, Motherboard motherboard)
         {
-            ViewData["Part"] = partType; 
+            ViewData["Part"] = "Motherboard"; 
 
             if (ModelState.IsValid)
             {
@@ -178,26 +305,138 @@ namespace PrecisionCustomPC.Controllers
             return View("ColorlessPartEdit", motherboard);
         }
         #endregion
+        #region Power Supply
+        public IActionResult PowerSupplies()
+        {
+            var model = _context.PowerSupplies.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colorless/Power Supply/Add")]
+        public IActionResult PowerSupplyAdd(PowerSupply powerSupply)
+        {
+            ViewData["Part"] = "Power Supply";
+
+            if (ModelState.IsValid)
+            {
+                powerSupply.Color = new Color { ColorValue = Options.Color.Black };
+                _context.PowerSupplies.Add(powerSupply);
+                _context.SaveChanges();
+                return RedirectToAction("PowerSupplies");
+            }
+
+            return View("PartAdd", powerSupply);
+        }
+        [HttpPost]
+        [Route("Colorless/Power Supply/{id}/{mdl}/Edit")]
+        public IActionResult PowerSupplyEdit(int id, string mdl, PowerSupply powerSupply)
+        {
+            ViewData["Part"] = "Power Supply";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(powerSupply).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("PowerSupplies");
+            }
+
+            return View("ColorlessPartEdit", powerSupply);
+        }
+        #endregion
+        #region Processor
+        public IActionResult Processors()
+        {
+            var model = _context.Processors.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colorless/Processor/Add")]
+        public IActionResult ProcessorAdd(Processor processor)
+        {
+            ViewData["Part"] = "Processor";
+
+            if (ModelState.IsValid)
+            {
+                processor.Color = new Color { ColorValue = Options.Color.Black };
+                _context.Processors.Add(processor);
+                _context.SaveChanges();
+                return RedirectToAction("Processors");
+            }
+
+            return View("PartAdd", processor);
+        }
+        [HttpPost]
+        [Route("Colorless/Processor/{id}/{mdl}/Edit")]
+        public IActionResult ProcessorEdit(int id, string mdl, Processor processor)
+        {
+            ViewData["Part"] = "Processor";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(processor).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("Processors");
+            }
+
+            return View("ColorlessPartEdit", processor);
+        }
+        #endregion
+        #region Storage
+        public IActionResult Storage()
+        {
+            var model = _context.Storage.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [Route("Colorless/Storage/Add")]
+        public IActionResult StorageAdd(Storage storage)
+        {
+            ViewData["Part"] = "Storage";
+
+            if (ModelState.IsValid)
+            {
+                storage.Color = new Color { ColorValue = Options.Color.Black };
+                _context.Storage.Add(storage);
+                _context.SaveChanges();
+                return RedirectToAction("Storage");
+            }
+
+            return View("PartAdd", storage);
+        }
+        [HttpPost]
+        [Route("Colorless/Storage/{id}/{mdl}/Edit")]
+        public IActionResult StorageEdit(int id, string mdl, Storage storage)
+        {
+            ViewData["Part"] = "Storage";
+
+            if (ModelState.IsValid)
+            {
+                var model = _context.Entry(storage).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("Storage");
+            }
+
+            return View("ColorlessPartEdit", storage);
+        }
+        #endregion
         #endregion
         #endregion
 
         #region Color
         [HttpPost]
-        public IActionResult PartAddColor(int id, string colorHash, string partType)
+        public IActionResult PartAddColor(int id, Options.Color colorModel, string partType)
         {
             var part = (PMV.Base.ColoredPart)GetDbEntry(partType, id);
-            Regex rgx = new Regex(@"^([#]{1}[a-fA-f0-9]{6})$");
-
-            //Make sure color isn't null and is a color hash format
-            if (colorHash != null && rgx.IsMatch(colorHash) && part != null)
+            
+            //Make sure the color is unique to this tower
+            if (part.Colors.FirstOrDefault(c => c.ColorValue == colorModel) == null)
             {
-                //Make sure the color is unique to this tower
-                if (part.Colors.FirstOrDefault(c => c.ColorHash == colorHash) == null)
-                {
-                    var color = new PMV.Color { ColorHash = colorHash };
-                    part.Colors.Add(color);
-                    _context.SaveChanges();
-                }
+                var color = new PMV.Color { ColorValue = colorModel };
+                part.Colors.Add(color);
+                _context.SaveChanges();
             }
 
             return RedirectToAction("ColoredPartEdit", new { PartType = partType, ID = id, mdl = part.Model });
@@ -210,7 +449,7 @@ namespace PrecisionCustomPC.Controllers
 
             if (part != null && color != null)
             {
-                //Remove color from tower
+                //Remove color from part
                 part.Colors.Remove(color);
                 //Remove color from database
                 RemoveColor(color);
@@ -274,8 +513,20 @@ namespace PrecisionCustomPC.Controllers
             {
                 case "Tower":
                     return _context.Towers.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
+                case "Fan":
+                    return _context.Fans.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
+                case "Memory":
+                    return _context.Memory.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
+                case "Video Card":
+                    return _context.VideoCards.Include(e => e.Colors).ThenInclude(c => c.Images).FirstOrDefault(e => e.ID == id);
                 case "Motherboard":
                     return _context.Motherboards.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
+                case "Power Supply":
+                    return _context.PowerSupplies.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
+                case "Processor":
+                    return _context.Processors.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
+                case "Storage":
+                    return _context.Storage.Include(e => e.Color.Images).FirstOrDefault(e => e.ID == id);
             }
 
             return null;
@@ -288,8 +539,20 @@ namespace PrecisionCustomPC.Controllers
             {
                 case "Tower":
                     return typeof(Tower);
+                case "Fan":
+                    return typeof(Fan);
+                case "Memory":
+                    return typeof(Memory);
+                case "Video Card":
+                    return typeof(VideoCard);
                 case "Motherboard":
                     return typeof(Motherboard);
+                case "Power Supply":
+                    return typeof(PowerSupply);
+                case "Processor":
+                    return typeof(Processor);
+                case "Storage":
+                    return typeof(Storage);
             }
 
             return null;

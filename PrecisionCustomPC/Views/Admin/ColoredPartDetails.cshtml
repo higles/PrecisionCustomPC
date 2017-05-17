@@ -21,8 +21,8 @@
     @foreach (var color in Model.Colors)
     {
         <li>
-            <span class="color-box" style="background: @color.ColorHash"></span>
-            <label class="label">@color.ColorHash</label>
+            <span class="color-box" style="background: @color.ColorValue.ToString()"></span>
+            <label class="label">@color.ColorValue.ToString()</label>
         </li>
     }
 </ul>
@@ -34,8 +34,8 @@
     {
         <li>
             <div class="color-block">
-                <span class="color-box" style="background: @color.ColorHash;"></span>
-                <label class="label">@color.ColorHash</label>
+                <span class="color-box" style="background: @color.ColorValue.ToString();"></span>
+                <label class="label">@color.ColorValue.ToString()</label>
             </div>
             <ul class="image-list">
                 @foreach (var image in color.Images)
@@ -48,7 +48,19 @@
         </li>
     }
 </ul>
-<a asp-action="@ViewData["Part"]s" asp-controller="Admin">Back to List</a>
+<hr/>
+@{
+    string returnUrl;
+    if (ViewData["Part"].Equals("Memory") || ViewData["Part"].Equals("Storage"))
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "");
+    }
+    else
+    {
+        returnUrl = ViewData["Part"].ToString().Replace(" ", "") + "s";
+    }
+}
+<a asp-action="@returnUrl" asp-controller="Admin">Back to List</a>
 
 <style>
     .container {

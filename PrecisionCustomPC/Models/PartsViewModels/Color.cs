@@ -14,10 +14,7 @@ namespace PrecisionCustomPC.Models.PartsViewModels
         public Nullable<int> ID { get; set; }
         
         [Required]
-        [MinLength(7)]
-        [MaxLength(7)]
-        [RegularExpression("[#]{1}[a-fA-f0-9]{6}")]
-        public string ColorHash { get; set; }
+        public Options.Color ColorValue { get; set; }
 
         public List<Image> Images { get; set; } = new List<Image>();
     }

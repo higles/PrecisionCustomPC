@@ -11,28 +11,33 @@ namespace PrecisionCustomPC.Models.PartsViewModels
 {
     public class Motherboard : Base.ColorlessPart
     {
-        [Required(ErrorMessage = "Size is required")]
-        [DisplayName("Size:")]
-        public Sizes Size { get; set; }
+        [Required]
+        [DisplayName("Size")]
+        public TowerSize Size { get; set; }
 
-        [Required(ErrorMessage = "Maximum Memory is required")]
-        [DisplayName("Maximum Memory:")]
-        public RAMSizes MaxRAM { get; set; }
+        [Required]
+        [DisplayName("Maximum Memory")]
+        public RAMSize MaxRAM { get; set; }
 
-        [DisplayName("Memory Standard:")]
-        public RAMClasses RAMClass { get; set; }
+        [Required]
+        [DisplayName("Memory Standard")]
+        public RAMClass RAMClass { get; set; }
 
-        [Required(ErrorMessage = "Memory slots is required")]
-        [Range(0, 10, ErrorMessage = "Number of memory slots is out of range")]
-        [DisplayName("Memory Slots:")]
+        [Required]
+        [Range(0, 10)]
+        [DisplayName("Memory Slots")]
         public Nullable<int> RamSlots { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Number of PCI slots is out of range")]
-        [DisplayName("PCI Express Slots:")]
+        [Range(0, 10)]
+        [DisplayName("PCI Express Slots")]
         public Nullable<int> PCISlots { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Number of USB 3.0 slots is out of range")]
-        [DisplayName("USB 3.0 Slots:")]
+        [Range(0, 10)]
+        [DisplayName("USB 3.0 Slots")]
         public Nullable<int> USB3Slots { get; set; }
+
+        [Range(0, 10)]
+        [DisplayName("M2 Slots")]
+        public Nullable<int> M2Slots { get; set; }
     }
 }
